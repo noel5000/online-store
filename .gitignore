@@ -7,3 +7,10 @@
 /api/OnlineStore.API/OnlineStore.Database/obj
 /api/OnlineStore.API/OnlineStore.Repository/obj
 /api/OnlineStore.API/OnlineStore.Services/obj
+/api/OnlineStore.API/OnlineStore.API/bin
+/api/OnlineStore.API/OnlineStore.Azul/bin
+/api/OnlineStore.API/OnlineStore.Common/bin
+/api/OnlineStore.API/OnlineStore.Data/bin
+/api/OnlineStore.API/OnlineStore.Database/bin
+/api/OnlineStore.API/OnlineStore.Repository/bin
+/api/OnlineStore.API/OnlineStore.Services/bin
