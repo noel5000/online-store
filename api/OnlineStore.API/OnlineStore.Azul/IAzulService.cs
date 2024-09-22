@@ -10,5 +10,9 @@ namespace OnlineStore.Azul
     public interface IAzulService
     {
         Task<PaymentResult> ProcessPayment(Payment payment);
+        Task<PaymentResult> ProcessRefund(Payment payment);
+        Task<PaymentResult> AddVault(Payment payment);
+
+        Task<PaymentResult> RemoveVault(Payment payment);
     }
 }

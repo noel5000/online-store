@@ -20,6 +20,9 @@ namespace OnlineStore.Azul.Models
         public string ReponseMessage { get; set; }
         public int Ticket { get; set; }
         public string CardNumber { get; set; }
+        public string DataVaultToken { get; set; }
+        public string DataVaultBrand { get; set; }
+        public string DataVaultExpiration { get; set; }
 
     }
 }

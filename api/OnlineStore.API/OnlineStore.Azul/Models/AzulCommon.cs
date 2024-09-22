@@ -14,7 +14,7 @@ namespace OnlineStore.Azul.Models
         public int Expiration { get; set; }
         public int CVC { get; set; }
         public string PosInputMode { get; set; }
-        public string TrxType { get; set; } = TransactionTypes.Sale.ToString();
+        public string TrxType { get; set; }
         public decimal Amount { get; set; }
         public decimal Itbis { get; set; }
         public string OrderNumber { get; set; }

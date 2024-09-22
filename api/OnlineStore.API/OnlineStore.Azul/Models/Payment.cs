@@ -8,12 +8,16 @@ namespace OnlineStore.Azul.Models
 {
     public class Payment: AzulCommon
     {
+        public Payment() 
+        {
+            TrxType = TransactionTypes.Sale.ToString();
+        }
         public int AcquirerRefData { get; set; } = 1;
         public string CustomerServicePhone { get; set; }
         public string ECommerceURL { get; set; }
         public string AltMerchantName { get; set; }
         public string DataVaultToken { get; set; }
-        public int SaveToDataVault { get; set; } = 0;
+        public int SaveToDataVault { get; set; } = 1;
         public int ForceNo3DS { get; set; } = 0;
 
     }

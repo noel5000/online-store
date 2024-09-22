@@ -7,11 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.10.*" />
     <PackageReference Include="System.ServiceModel.Federation" Version="4.10.*" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.10.*" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.10.*" />
     <PackageReference Include="System.ServiceModel.Security" Version="4.10.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Common\OnlineStore.Common.csproj" />
+    <ProjectReference Include="..\OnlineStore.Database\OnlineStore.Database.csproj" />
+    <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj" />
+    <ProjectReference Include="..\OnlineStore.Repository\OnlineStore.Repository.csproj" />
   </ItemGroup>
 
 </Project>
