@@ -45,6 +45,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTransient<TokenServices>();
 builder.Services.AddTransient<EmailTemplates>();
 builder.Services.AddTransient<IAzulService, AzulService>();
+builder.Services.AddSingleton<IInvoiceService, InvoiceService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

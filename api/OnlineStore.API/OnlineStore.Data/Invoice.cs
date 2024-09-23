@@ -17,7 +17,7 @@ namespace OnlineStore.Data
         public decimal TotalAmount { get; set; }
         public bool IsSubscription { get; set; }
         public DateTime Date {  get; set; }
-        public int Quantity { get; set; } = 1;
+        public decimal Quantity { get; set; } = 1;
 
         public int? SubscriptionId { get; set; }
         public string? AzulResponse { get; set; }
