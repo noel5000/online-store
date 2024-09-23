@@ -12,7 +12,6 @@ namespace OnlineStore.Azul.Models
         {
             TrxType = TransactionTypes.Sale.ToString();
         }
-        public int AcquirerRefData { get; set; } = 1;
         public string CustomerServicePhone { get; set; }
         public string ECommerceURL { get; set; }
         public string AltMerchantName { get; set; }

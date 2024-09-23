@@ -10,15 +10,18 @@ namespace OnlineStore.Azul.Models
     {
         public string Channel { get; set; }
         public string Store { get; set; }
-        public int CardNumber { get; set; }
+        public string CardNumber { get; set; }
         public int Expiration { get; set; }
-        public int CVC { get; set; }
+        public string CVC { get; set; }
         public string PosInputMode { get; set; }
         public string TrxType { get; set; }
         public decimal Amount { get; set; }
         public decimal Itbis { get; set; }
         public string OrderNumber { get; set; }
         public string CustomOrderId { get; set; } = DateTime.Now.Ticks.ToString();
+        public string CustomerServicePhone { get; set; }
+        public string ECommerceURL { get; set; }
+        public int AcquirerRefData { get; set; } = 1;
 
     }
 }

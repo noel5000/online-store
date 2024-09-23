@@ -4,6 +4,7 @@
     {
         Sale,
         Hold,
-        Refund
+        Refund,
+        CREATE
     }
 }
