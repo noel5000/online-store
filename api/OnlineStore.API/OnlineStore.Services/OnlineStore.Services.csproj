@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Azul\OnlineStore.Azul.csproj" />
+    <ProjectReference Include="..\OnlineStore.Common\OnlineStore.Common.csproj" />
+    <ProjectReference Include="..\OnlineStore.Database\OnlineStore.Database.csproj" />
+    <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj" />
+    <ProjectReference Include="..\OnlineStore.Repository\OnlineStore.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
@@ -20,8 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Azul\OnlineStore.Azul.csproj" />
     <ProjectReference Include="..\OnlineStore.Common\OnlineStore.Common.csproj" />
     <ProjectReference Include="..\OnlineStore.Database\OnlineStore.Database.csproj" />
+    <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj" />
+    <ProjectReference Include="..\OnlineStore.Repository\OnlineStore.Repository.csproj" />
+    <ProjectReference Include="..\OnlineStore.Services\OnlineStore.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,12 +1,46 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OnlineStore.Data;
 
 namespace OnlineStore.Database
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Subscription> Subscriptions { get; set; }
+        public virtual DbSet<SubscriptionPayment> SubscriptionPayments { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Subscription>()
+                .HasMany(s => s.Payments)
+                .WithOne(p => p.Subscription)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Subscription>()
+                .HasOne(s=>s.Product)
+                .WithMany(p=>p.Subscriptions)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Subscription>()
+                .HasOne(s => s.User)
+                .WithMany(p => p.Subscriptions)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Invoice>()
+                .HasOne(s => s.Product)
+                .WithMany(p => p.Invoices)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Invoice>()
+                .HasOne(s => s.User)
+                .WithMany(p => p.Invoices)
+                .OnDelete(DeleteBehavior.Restrict);
+            base.OnModelCreating(builder);
+        }
+
     }
 }
