@@ -202,7 +202,7 @@ namespace OnlineStore.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Invoices", (string)null);
                 });
 
             modelBuilder.Entity("OnlineStore.Data.Product", b =>
@@ -231,7 +231,7 @@ namespace OnlineStore.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("OnlineStore.Data.Subscription", b =>
@@ -276,7 +276,7 @@ namespace OnlineStore.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("OnlineStore.Data.SubscriptionPayment", b =>
@@ -303,7 +303,7 @@ namespace OnlineStore.Database.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("SubscriptionPayments");
+                    b.ToTable("SubscriptionPayments", (string)null);
                 });
 
             modelBuilder.Entity("OnlineStore.Data.User", b =>

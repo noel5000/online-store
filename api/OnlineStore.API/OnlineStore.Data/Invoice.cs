@@ -1,11 +1,14 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Data
 {
     public class Invoice
     {
+
+        [Key]
         public int Id { get; set; }
         public string UserId { get; set; }
         public int ProductId { get; set; }

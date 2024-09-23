@@ -1,11 +1,13 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Data
 {
     public class SubscriptionPayment
     {
+        [Key]
         public int Id { get; set; }
 
         public int SubscriptionId { get; set; }

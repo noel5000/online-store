@@ -18,6 +18,10 @@ namespace OnlineStore.Database
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Subscription>().HasKey(x => x.Id);
+            builder.Entity<Invoice>().HasKey(x => x.Id);
+            builder.Entity<Product>().HasKey(x => x.Id);
+            builder.Entity<SubscriptionPayment>().HasKey(x => x.Id);
             builder.Entity<Subscription>()
                 .HasMany(s => s.Payments)
                 .WithOne(p => p.Subscription)

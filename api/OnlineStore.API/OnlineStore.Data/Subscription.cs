@@ -1,11 +1,14 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Data
 {
     public class Subscription
     {
+
+        [Key]
         public int Id { get; set; }
 
         public int ProductId { get; set; }
