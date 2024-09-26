@@ -6,6 +6,12 @@
 * License: https://bootstrapmade.com/license/
 */
 
+
+import AOS from  '../vendor/aos/aos.js';
+import GLightbox from '../vendor/glightbox/js/glightbox.min.js';
+import PureCounter from '../vendor/purecounter/purecounter_vanilla.js';
+import Swiper from '../vendor/swiper/swiper-bundle.min.js';
+
 (function() {
   "use strict";
 
@@ -124,7 +130,7 @@
       );
 
       if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
+       // initSwiperWithCustomPagination(swiperElement, config);
       } else {
         new Swiper(swiperElement, config);
       }
