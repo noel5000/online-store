@@ -1,6 +1,7 @@
 
 
 using OnlineStore.Common;
+using OnlineStore.Data;
 using OnlineStore.Services;
 
 namespace OnlineStore.Services.Email;
@@ -15,22 +16,17 @@ public class EmailTemplates : SmtpEmailServices
     {
     }
 
-    public async Task SendFormLink(string to, string url, string password)
+
+    public async Task SendInvoiceAsync(Invoice invoice)
     {
 
         Body = "<div style=\"background-color: #ffffff; padding: 20px;\">" +
-              $"<p style=\"font-size: 16px; line-height: 1.5; margin-bottom: 20px;\">Ha recibido este correo para proceder a {"Comprado"} el" +
-              "<b> Formulario de debida diligencia</b>. </p>" +
-              //(emailType == EmailTypes.NewRequest ? $"{$"<br /><p> Su contrasena provisional es: <b>{password}</b></p><br />"}":"") +
-              "<p> Para acceder al mismo por" +
-              "favor presione el siguiente botón:" +
-              "</p>" +
-              "<a href=\"" + url + "\" style=\"background-color:#000066; padding: 10px 20px; border:none; border-radius: 4px; cursor:pointer; color:#ffffff; text-decoration: none;  display: inline-block; \">Acceder</a>" +
-              "</div>";
-        To = to;
-        Subject ="";
+              $"<b2>Hola {invoice.User?.FirstName}</b2> <br />" +
+              $"<p>Gracias por comprar en nuestra plataforma</p> <br />";
+        To = invoice.User?.Email;
+        Subject = $"Confirmación de order {invoice.OrderId}";
 
-        await Send();
+      //  await SendAsync();
     }
 
 

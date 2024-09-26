@@ -6,6 +6,7 @@ using OnlineStore.Common;
 using OnlineStore.Data;
 using OnlineStore.Data.ViewModels;
 using OnlineStore.Database;
+using OnlineStore.Services.Email;
 
 namespace OnlineStore.Services
 {
@@ -15,9 +16,16 @@ namespace OnlineStore.Services
         private readonly IAzulService _azulService;
         private readonly UserManager<User> _userManager;
         private readonly AppSettings _appSettings;
+        private readonly EmailTemplates _emailTemplates;
 
-        public InvoiceService(AppSettings appSettings, ApplicationDbContext context, IAzulService azulService, UserManager<User> userManager)
+        public InvoiceService(
+            AppSettings appSettings,
+            ApplicationDbContext context,
+            IAzulService azulService,
+            UserManager<User> userManager,
+            EmailTemplates emailTemplates)
         {
+            _emailTemplates = emailTemplates;
             _context = context;
             _userManager = userManager;
             _azulService = azulService;
@@ -70,7 +78,7 @@ namespace OnlineStore.Services
                     subscription = currentSubscription;
             }
 
-            await _context.Invoices.AddAsync(new() 
+          var invoice =  await _context.Invoices.AddAsync(new() 
             {
                 Amount = product.Price,
                 AzulResponse = Algorithm.Encrypt( JsonConvert.SerializeObject(order), _appSettings.TokenKey),
@@ -94,6 +102,7 @@ namespace OnlineStore.Services
                 await _userManager.UpdateAsync(user);
             }
 
+            await _emailTemplates.SendInvoiceAsync(invoice.Entity);
             return new Result<object>() { Status = 0, Message = "ok", Data  = order };
         }
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -6,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using OnlineStore.API;
 using OnlineStore.Azul;
 using OnlineStore.Common;
+using OnlineStore.Data;
 using OnlineStore.Database;
 using OnlineStore.Services;
 using OnlineStore.Services.Email;
@@ -45,7 +47,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTransient<TokenServices>();
 builder.Services.AddTransient<EmailTemplates>();
 builder.Services.AddTransient<IAzulService, AzulService>();
-builder.Services.AddSingleton<IInvoiceService, InvoiceService>();
+builder.Services.AddTransient<IInvoiceService, InvoiceService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -61,6 +63,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.UTF8.GetBytes(appSettings.TokenKey)),
             ClockSkew = TimeSpan.Zero,
         });
+
+builder.Services.AddIdentity<User, IdentityRole>(o =>
+{
+    o.Password.RequireDigit = false;
+    o.Password.RequireLowercase = false;
+    o.Password.RequireUppercase = false;
+    o.Password.RequireNonAlphanumeric = false;
+    o.User.RequireUniqueEmail = true;
+}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddCors(o =>
     o.AddPolicy("CorsPolicy",
@@ -82,7 +94,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

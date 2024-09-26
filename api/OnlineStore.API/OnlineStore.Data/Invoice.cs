@@ -22,6 +22,8 @@ namespace OnlineStore.Data
         public int? SubscriptionId { get; set; }
         public string? AzulResponse { get; set; }
 
+        public string OrderId { get; set; } = DateTime.Now.Ticks.ToString();
+
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 

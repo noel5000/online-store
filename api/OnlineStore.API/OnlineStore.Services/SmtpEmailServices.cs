@@ -28,7 +28,7 @@ public class SmtpEmailServices : IDisposable
     }
 
 
-    public async Task Send()
+    public async Task SendAsync()
     {
         try
         {

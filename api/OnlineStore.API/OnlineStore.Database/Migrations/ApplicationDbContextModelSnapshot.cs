@@ -175,11 +175,15 @@ namespace OnlineStore.Database.Migrations
                     b.Property<bool>("IsSubscription")
                         .HasColumnType("bit");
 
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("SubscriptionId")
                         .HasColumnType("int");
@@ -202,7 +206,7 @@ namespace OnlineStore.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Invoices", (string)null);
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("OnlineStore.Data.Product", b =>
@@ -212,6 +216,9 @@ namespace OnlineStore.Database.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -223,6 +230,9 @@ namespace OnlineStore.Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -231,7 +241,7 @@ namespace OnlineStore.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("OnlineStore.Data.Subscription", b =>
@@ -276,7 +286,7 @@ namespace OnlineStore.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("OnlineStore.Data.SubscriptionPayment", b =>
@@ -303,7 +313,7 @@ namespace OnlineStore.Database.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("SubscriptionPayments", (string)null);
+                    b.ToTable("SubscriptionPayments");
                 });
 
             modelBuilder.Entity("OnlineStore.Data.User", b =>
