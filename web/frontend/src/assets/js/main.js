@@ -7,6 +7,7 @@
 */
 
 
+import Aos from 'aos';
 import AOS from  '../vendor/aos/aos.js';
 import GLightbox from '../vendor/glightbox/js/glightbox.min.js';
 import PureCounter from '../vendor/purecounter/purecounter_vanilla.js';
@@ -24,6 +25,7 @@ import Swiper from '../vendor/swiper/swiper-bundle.min.js';
    /**
    * Apply .scrolled class to the body as the page is scrolled down
    */
+   aosInit();
    function toggleScrolled() {
     const selectBody = document.querySelector('body');
     const selectHeader = document.querySelector('#header');

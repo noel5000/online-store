@@ -1,3 +1,6 @@
+import React,{ useEffect } from 'react';
+import AOS from "aos";
+import "aos/dist/aos.css";
 import store1_pic from '../assets/img/course-1.jpg';
 import store2_pic from '../assets/img/trainers/trainer-1-2.jpg';
 import store3_pic from '../assets/img/course-2.jpg';
@@ -7,6 +10,14 @@ import store6_pic from '../assets/img/trainers/trainer-3-2.jpg';
 import PageHeader from './pageHeading';
 
 export default function Store(){
+    useEffect(() => {
+        AOS.init({
+          duration: 600,
+          easing: 'ease-in-out',
+          once: true,
+          mirror: false
+        });
+      }, []);
 
     return (<>
       <main className="main">

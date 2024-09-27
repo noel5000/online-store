@@ -1,12 +1,22 @@
 
+import React,{ useEffect } from 'react';
 import hero_logo from '../assets/img/hero-bg.jpg';
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import '../assets/vendor/bootstrap/js/bootstrap.bundle.min.js';
 import '../assets/vendor/php-email-form/validate.js';
-//import '../assets/js/main.js';
 
 export default function Home(){
+  useEffect(() => {
+    AOS.init({
+      duration: 600,
+      easing: 'ease-in-out',
+      once: true,
+      mirror: false
+    });
+  }, []);
+
     return (<>
         <section id="hero" className="hero section dark-background">
     

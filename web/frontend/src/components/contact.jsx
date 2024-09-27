@@ -1,3 +1,8 @@
+
+import React,{ useEffect } from 'react';
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const style ={
     border: '0',
      width: '100%',
@@ -6,6 +11,14 @@ const style ={
 
 export default function ContactPage(){
 
+    useEffect(() => {
+        AOS.init({
+          duration: 600,
+          easing: 'ease-in-out',
+          once: true,
+          mirror: false
+        });
+      }, []);
     return (<>
         
     <section id="contact" className="contact section">
