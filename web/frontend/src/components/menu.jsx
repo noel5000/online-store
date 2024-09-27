@@ -26,11 +26,8 @@ return (
         <nav id="navmenu" className="navmenu">
           <ul>
             <li> <Link to="/" className='active'>Home<br /></Link></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Courses</a></li>
-            <li><a href="#">Trainers</a></li>
-            <li><a href="#">Events</a></li>
-            <li><a href="#">Pricing</a></li>
+            <li><Link to="/store">Store<br /></Link></li>
+            <li><Link to="/subscription">Subscriptions<br /></Link></li>
             <li className="dropdown"><a href="#"><span>Dropdown</span> <i className="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Dropdown 1</a></li>
@@ -48,7 +45,7 @@ return (
                 <li><a href="#">Dropdown 4</a></li>
               </ul>
             </li>
-            <li><a href="#">Contact</a></li>
+            <li><Link to="/contact">Contact<br /></Link></li>
           </ul>
           <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
