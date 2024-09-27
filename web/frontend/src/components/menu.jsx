@@ -3,8 +3,17 @@ import '../assets/css/main.css';
 import '../assets/vendor/bootstrap/css/bootstrap.min.css';
 import '../assets/vendor/bootstrap-icons/bootstrap-icons.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import '../assets/vendor/bootstrap/js/bootstrap.bundle.min.js';
+import '../assets/vendor/php-email-form/validate.js';
+import '../assets/vendor/aos/aos.js';
+import '../assets/vendor/glightbox/js/glightbox.min.js';
+import '../assets/vendor/purecounter/purecounter_vanilla.js';
+import '../assets/vendor/swiper/swiper-bundle.min.js';
+import '../assets/js/main';
 
 function MainMenu(){
+    
 return (
 <>
 <header id="header" className="header d-flex align-items-center sticky-top">

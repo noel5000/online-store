@@ -12,13 +12,19 @@ import GLightbox from '../vendor/glightbox/js/glightbox.min.js';
 import PureCounter from '../vendor/purecounter/purecounter_vanilla.js';
 import Swiper from '../vendor/swiper/swiper-bundle.min.js';
 
+
 (function() {
   "use strict";
 
-  /**
+  document.addEventListener('DOMContentLoaded', function() {
+    // Your script here
+    console.log("The DOM is fully loaded and parsed.");
+  });
+ window.onload = function(){
+   /**
    * Apply .scrolled class to the body as the page is scrolled down
    */
-  function toggleScrolled() {
+   function toggleScrolled() {
     const selectBody = document.querySelector('body');
     const selectHeader = document.querySelector('#header');
     if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
@@ -38,12 +44,19 @@ import Swiper from '../vendor/swiper/swiper-bundle.min.js';
     mobileNavToggleBtn.classList.toggle('bi-list');
     mobileNavToggleBtn.classList.toggle('bi-x');
   }
-  mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+
+  if(!mobileNavToggleBtn)
+    console.log('mobileNavToggleBtn not reade')
+  else
+    mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
 
   /**
    * Hide mobile nav on same-page/hash links
    */
   document.querySelectorAll('#navmenu a').forEach(navmenu => {
+    if(!navmenu)
+      console.log('navmenu not reade')
+    else
     navmenu.addEventListener('click', () => {
       if (document.querySelector('.mobile-nav-active')) {
         mobileNavToogle();
@@ -56,6 +69,9 @@ import Swiper from '../vendor/swiper/swiper-bundle.min.js';
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
+    if(!navmenu)
+      console.log('navmenu not reade')
+    else
     navmenu.addEventListener('click', function(e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
@@ -84,6 +100,9 @@ import Swiper from '../vendor/swiper/swiper-bundle.min.js';
       window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
     }
   }
+  if(!scrollTop)
+    console.log('scrollTop not reade')
+  else
   scrollTop.addEventListener('click', (e) => {
     e.preventDefault();
     window.scrollTo({
@@ -138,5 +157,6 @@ import Swiper from '../vendor/swiper/swiper-bundle.min.js';
   }
 
   window.addEventListener("load", initSwiper);
+ }
 
 })();
