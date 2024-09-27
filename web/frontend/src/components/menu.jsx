@@ -6,49 +6,38 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function MainMenu(){
-    
-return (
-<>
-<header id="header" className="header d-flex align-items-center sticky-top">
-      <div className="container-fluid container-xl position-relative d-flex align-items-center">
-  
-        <a href="#" className="logo d-flex align-items-center me-auto">
-          <h1 className="sitename">Mentor</h1>
-        </a>
-  
-        <nav id="navmenu" className="navmenu">
-          <ul>
-            <li> <Link to="/" className='active'>Home<br /></Link></li>
-            <li><Link to="/store">Store<br /></Link></li>
-            <li><Link to="/subscription">Subscriptions<br /></Link></li>
-            <li className="dropdown"><a href="#"><span>Dropdown</span> <i className="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li className="dropdown"><a href="#"><span>Deep Dropdown</span> <i className="bi bi-chevron-down toggle-dropdown"></i></a>
+    const routes =[
+        {route:"/", label:"Home", id:0},
+        {route:"/store", label:"Store", id:1},
+        {route:"/subscription", label:"Subscriptions", id:2},
+        {route:"/contact", label:"Contact Us", id:3},
+    ]
+
+    function renderMenu(){
+        const urlRoute = window.location.pathname.split('/');
+        let activeRoute = urlRoute.length < 2 ? '/' : urlRoute.filter(x=>x)[0];
+        return <>
+        <header id="header" className="header d-flex align-items-center sticky-top">
+              <div className="container-fluid container-xl position-relative d-flex align-items-center">
+          
+                <a href="#" className="logo d-flex align-items-center me-auto">
+                  <h1 className="sitename">Mentor</h1>
+                </a>
+          
+                <nav id="navmenu" className="navmenu">
                   <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
+                    {routes.map(x=><li  key={x.id}> <Link to={x.route} className={x.route.replace('/','') == activeRoute? 'active': ''}  >{x.label}<br /></Link></li>)}
                   </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li>
-            <li><Link to="/contact">Contact<br /></Link></li>
-          </ul>
-          <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-  
-        <a className="btn-getstarted" href="courses.html">Get Started</a>
-  
-      </div>
-    </header>
-</>
-)
+                  <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+          
+                <a className="btn-getstarted" href="courses.html">Get Started</a>
+          
+              </div>
+            </header>
+        </>
+    }
+return renderMenu();
 }
 
 export default MainMenu;
