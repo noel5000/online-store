@@ -15,18 +15,21 @@ import './assets/vendor/glightbox/js/glightbox.min.js';
 import './assets/vendor/purecounter/purecounter_vanilla.js';
 import './assets/vendor/swiper/swiper-bundle.min.js';
 import './assets/js/main';
+import ProductDetail from './components/productDetail.jsx';
+import Login from './components/login.jsx';
 
 function App() {
   return (
     <Router>
       <MainMenu></MainMenu>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Store />} />
         <Route path='/store' element={<Store />} />
         <Route path='/subscription' element={<Subscription />} />
         <Route path='/contact' element={<ContactPage />} />
+        <Route path='/product' element={<ProductDetail />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
-    <PageFooter />
     </Router>
   );
 }

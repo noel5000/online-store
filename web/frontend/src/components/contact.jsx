@@ -2,6 +2,7 @@
 import React,{ useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import PageFooter from './pageFooting';
 
 const style ={
     border: '0',
@@ -60,7 +61,7 @@ export default function ContactPage(){
           </div>
 
           <div className="col-lg-8">
-            <form action="forms/contact.php" method="post" className="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form className="php-email-form" data-aos="fade-up" data-aos-delay="200">
               <div className="row gy-4">
 
                 <div className="col-md-6">
@@ -96,5 +97,6 @@ export default function ContactPage(){
       </div>
 
     </section>
+    <PageFooter />
     </>);
 }

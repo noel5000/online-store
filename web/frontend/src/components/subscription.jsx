@@ -3,6 +3,7 @@ import React,{ useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import PageHeader from './pageHeading';
+import PageFooter from './pageFooting';
 
 export default function Subscription(){
   useEffect(() => {
@@ -97,5 +98,6 @@ export default function Subscription(){
       </div>
 
     </section>
+    <PageFooter />
     </>);
 }

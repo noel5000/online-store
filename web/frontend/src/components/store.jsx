@@ -8,6 +8,8 @@ import store4_pic from '../assets/img/trainers/trainer-2-2.jpg';
 import store5_pic from '../assets/img/course-3.jpg';
 import store6_pic from '../assets/img/trainers/trainer-3-2.jpg';
 import PageHeader from './pageHeading';
+import { Link } from 'react-router-dom';
+import PageFooter from './pageFooting';
 
 export default function Store(){
     useEffect(() => {
@@ -38,7 +40,7 @@ export default function Store(){
               <p className="price">$169</p>
             </div>
 
-            <h3><a href="course-details.html">Website Design</a></h3>
+            <h3><a><Link to="/product">Website Design</Link></a></h3>
             <p className="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
             <div className="trainer d-flex justify-content-between align-items-center">
               <div className="trainer-profile d-flex align-items-center">
@@ -64,7 +66,7 @@ export default function Store(){
               <p className="price">$250</p>
             </div>
 
-            <h3><a href="course-details.html">Search Engine Optimization</a></h3>
+            <h3><a> <Link to="/product">Search Engine Optimization</Link></a></h3>
             <p className="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
             <div className="trainer d-flex justify-content-between align-items-center">
               <div className="trainer-profile d-flex align-items-center">
@@ -90,7 +92,7 @@ export default function Store(){
               <p className="price">$180</p>
             </div>
 
-            <h3><a href="course-details.html">Copywriting</a></h3>
+            <h3><a><Link to="/product">Copywriting</Link></a></h3>
             <p className="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
             <div className="trainer d-flex justify-content-between align-items-center">
               <div className="trainer-profile d-flex align-items-center">
@@ -114,5 +116,6 @@ export default function Store(){
 </section>
 
 </main>
+<PageFooter />
     </>);
 }

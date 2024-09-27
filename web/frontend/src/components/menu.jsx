@@ -8,8 +8,7 @@ import { useEffect } from 'react';
 function MainMenu(){
   const location = useLocation();
     const routes =[
-        {route:"/", label:"Home", id:0},
-        {route:"/store", label:"Store", id:1},
+        {route:"/", label:"Store", id:0},
         {route:"/subscription", label:"Subscriptions", id:2},
         {route:"/contact", label:"Contact Us", id:3},
     ]
@@ -26,8 +25,8 @@ function MainMenu(){
         <header id="header" className="header d-flex align-items-center sticky-top">
               <div className="container-fluid container-xl position-relative d-flex align-items-center">
           
-                <a href="#" className="logo d-flex align-items-center me-auto">
-                  <h1 className="sitename">Mentor</h1>
+                <a className="logo d-flex align-items-center me-auto">
+                  <Link to="/"><h1 className="sitename">Mentor</h1></Link>
                 </a>
           
                 <nav id="navmenu" className="navmenu">
@@ -38,8 +37,8 @@ function MainMenu(){
                   </ul>
                   <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
-          
-                <a className="btn-getstarted" href="courses.html">Get Started</a>
+
+                <Link to="login" className='btn-getstarted'>Login</Link>
           
               </div>
             </header>
