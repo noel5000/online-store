@@ -4,6 +4,7 @@ import '../assets/vendor/bootstrap/css/bootstrap.min.css';
 import '../assets/vendor/bootstrap-icons/bootstrap-icons.css';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import React from 'react';
 
 function MainMenu(){
   const location = useLocation();
@@ -21,7 +22,7 @@ function MainMenu(){
     }
 
     function renderMenu(){
-        return <>
+        return (<>
         <header id="header" className="header d-flex align-items-center sticky-top">
               <div className="container-fluid container-xl position-relative d-flex align-items-center">
           
@@ -42,7 +43,7 @@ function MainMenu(){
           
               </div>
             </header>
-        </>
+        </>)
     }
 return renderMenu();
 }

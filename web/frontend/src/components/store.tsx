@@ -7,9 +7,9 @@ import store3_pic from '../assets/img/course-2.jpg';
 import store4_pic from '../assets/img/trainers/trainer-2-2.jpg';
 import store5_pic from '../assets/img/course-3.jpg';
 import store6_pic from '../assets/img/trainers/trainer-3-2.jpg';
-import PageHeader from './pageHeading';
+import PageHeader from './pageHeading.tsx';
 import { Link } from 'react-router-dom';
-import PageFooter from './pageFooting';
+import PageFooter from './pageFooting.tsx';
 
 export default function Store(){
     useEffect(() => {

@@ -2,8 +2,8 @@
 import React,{ useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
-import PageHeader from './pageHeading';
-import PageFooter from './pageFooting';
+import PageHeader from './pageHeading.tsx';
+import PageFooter from './pageFooting.tsx';
 
 export default function Subscription(){
   useEffect(() => {

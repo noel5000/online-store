@@ -32,11 +32,11 @@ export default function Login(){
               <div className="row gy-4">
 
                 <div className="col-md-12 ">
-                  <input type="email" className="form-control" name="email" placeholder="Your Email" required="" />
+                  <input type="email" className="form-control" name="email" placeholder="Your Email" required={true} />
                 </div>
 
                 <div className="col-md-12">
-                  <input type="password" className="form-control" name="password" placeholder="Password" required="" />
+                  <input type="password" className="form-control" name="password" placeholder="Password" required={true} />
                 </div>
 
                 <div className="col-md-12 text-center">
