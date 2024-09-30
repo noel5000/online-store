@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import axiosInstance from './httpClient';
+import axiosInstance from './httpClient.ts';
 
 export interface IHttpResult<T>{
     id:number;
@@ -9,6 +9,7 @@ export interface IHttpResult<T>{
     data:T
 }
 export interface IHttpService<T>{
+GetOdata(queryParams:string | undefined):Promise<any>;
 GetAll(queryParams:string | undefined):Promise<IHttpResult<T[]>>;
 Get(id: number):Promise<IHttpResult<T>>;
 Delete(id: number):Promise<IHttpResult<object>>;
@@ -30,7 +31,20 @@ export class HttpService<T> implements IHttpService<T>{
             "authorization": `Bearer TOKEN`
         }
     }
-
+    setOdataUrl():string{
+        const urlArray = this.endpointUrl.split('/');
+        let url = '';
+        for(let i =0; i<urlArray.length-2; i++)
+            url+=`/${urlArray[i]}`;
+        url+=`/odata/${urlArray[urlArray.length-1]}`;
+        return url;
+    }
+    
+    async GetOdata(queryParams: string | undefined): Promise<any>{
+        return (await  axiosInstance.get<any>( queryParams?`${this.setOdataUrl()}?${queryParams}`: this.setOdataUrl(), {
+               headers:this.getHeaders()
+           })).data;
+       };
     async GetAll(queryParams: string | undefined): Promise<IHttpResult<T[]>>{
         return (await  axiosInstance.get<IHttpResult<T[]>>( queryParams?`${this.endpointUrl}/${queryParams}`: this.endpointUrl, {
                headers:this.getHeaders()

@@ -1,6 +1,6 @@
 // httpClient.ts
 import axios from 'axios';
-import { applicationConfig } from './environment';
+import { applicationConfig } from './environment.ts';
 
 
 let activeRequests = 0;
