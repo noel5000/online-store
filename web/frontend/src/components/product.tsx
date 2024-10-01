@@ -17,8 +17,9 @@ category: string | undefined;
 }
 interface ProductProps {
   product: IProduct;
+  index:number;
 }
-export default function Product({ product }: ProductProps){
+export default function Product({ product, index }: ProductProps){
     useEffect(() => {
         AOS.init({
           duration: 600,
@@ -31,16 +32,19 @@ function getProductPicture(url):string{
   return `${applicationConfig.backendUrl}${url}`;
 }
     return (<>
-      <div className="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+      <div className="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay={(100 * index)} key={product.id}>
         <div className="course-item">
-          <img src={getProductPicture(product.pictureUrl)} className="img-fluid" alt="..." />
+        <Link to={`/product/${product.id}`}>
+        <img src={getProductPicture(product.pictureUrl)} className="img-fluid" alt="..." />
+        </Link>
+         
           <div className="course-content">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <p className="category">{product.name}</p>
               <p className="price">${product.price}</p>
             </div>
 
-            <h3><a><Link to={`/product/${product.id}`}>{product.name}</Link></a></h3>
+            <h3><Link to={`/product/${product.id}`}>{product.name}</Link></h3>
             <p className="description">{product.description}</p>
             <div className="trainer d-flex justify-content-between align-items-center">
               {/* <div className="trainer-profile d-flex align-items-center">

@@ -22,13 +22,12 @@ function MainMenu(){
     }
 
     function renderMenu(){
+      console.log(routes)
         return (<>
         <header id="header" className="header d-flex align-items-center sticky-top">
               <div className="container-fluid container-xl position-relative d-flex align-items-center">
           
-                <a className="logo d-flex align-items-center me-auto">
-                  <Link to="/"><h1 className="sitename">Mentor</h1></Link>
-                </a>
+                  <Link to="/" className="logo d-flex align-items-center me-auto"><h1 className="sitename">Mentor</h1></Link>
           
                 <nav id="navmenu" className="navmenu">
                   <ul>

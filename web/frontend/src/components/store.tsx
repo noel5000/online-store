@@ -1,4 +1,4 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect, useState } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import store1_pic from '../assets/img/course-1.jpg';
@@ -15,7 +15,8 @@ import Product, { IProduct } from './product.tsx';
 import { applicationConfig } from '../common/environment.ts';
 
 export default function Store(){
-  let products = [];
+  const [getProducts, setProducts] = useState([]);
+  const [getPaging, setPaging] = useState({page:0, size:5, count:0});
     useEffect(() => {
         AOS.init({
           duration: 600,
@@ -23,15 +24,22 @@ export default function Store(){
           once: true,
           mirror: false
         });
-        getProducts().then(r=>{
-          products = r.value;
-          console.log(products);
+        retreiveProducts().then(r=>{
+          const {page, size} = getPaging;
+          setPaging({page, size, count:r['@odata.count']});
+          setProducts(r.value);
         });
       }, []);
-
-     function getProducts(){
+      function setPagingQuery():string{
+        let {page, size, count} = getPaging;
+        const maxPage = count/size + 1;
+        page = page > maxPage? maxPage - 1 : page;
+        const skip = page * size;
+        return setPagingQuery();
+      }
+     function retreiveProducts(){
         const api = new HttpService<IProduct>(`product`);
-        const result = api.GetOdata('$top=5&$skip=0&$count=true');
+        const result = api.GetOdata(`$top=5&$skip=0&$count=true`);
         return result;
       }
 
@@ -44,8 +52,8 @@ export default function Store(){
   <div className="container">
 
     <div className="row">
-    {products.map(p=>
-      <Product product={p}></Product>
+    {getProducts.map((p, index)=>
+      <Product product={p} key={index} index={index}></Product>
     )}
 
 
