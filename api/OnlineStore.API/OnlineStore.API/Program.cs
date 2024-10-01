@@ -78,11 +78,10 @@ builder.Services.AddCors(o =>
     o.AddPolicy("CorsPolicy",
         builder =>
         {
-            // builder.AllowAnyOrigin()
-            //     .SetIsOriginAllowed((host) => true)
-            //     .AllowAnyMethod()
-            //     .AllowAnyHeader();
-            builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+            builder.AllowAnyOrigin()
+                .SetIsOriginAllowed((host) => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader();
         }));
 
 var app = builder.Build();

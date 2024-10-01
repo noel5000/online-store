@@ -22,7 +22,6 @@ function MainMenu(){
     }
 
     function renderMenu(){
-      console.log(routes)
         return (<>
         <header id="header" className="header d-flex align-items-center sticky-top">
               <div className="container-fluid container-xl position-relative d-flex align-items-center">
