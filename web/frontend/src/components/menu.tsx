@@ -58,12 +58,14 @@ function MainMenu() {
               </ul>
               <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-            <div className="cart">
-              <img src={cart_icon} alt="Cart Icon"></img>
-              <span hidden={totalItems == 0} className="cart-count">
-                {totalItems}
-              </span>
-            </div>
+            <Link className="cart" to="/cart">
+              <div className="cart">
+                <img src={cart_icon} alt="Cart Icon"></img>
+                <span hidden={totalItems == 0} className="cart-count">
+                  {totalItems}
+                </span>
+              </div>
+            </Link>
             <Link to="login" className="btn-getstarted">
               Login
             </Link>

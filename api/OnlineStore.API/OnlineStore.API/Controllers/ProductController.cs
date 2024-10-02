@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Common;
+using OnlineStore.Data;
 using OnlineStore.Database;
 
 namespace OnlineStore.API.Controllers
@@ -34,6 +35,23 @@ namespace OnlineStore.API.Controllers
                     var sorting = arg as string;
                     return Ok( _context.Products.AsNoTracking().AsQueryable());
                 }, null);
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { status = -1, message = ex.Message });
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+               var data = await _context.Products.FindAsync(id);
+               if(data is null)
+                return Ok(new {status = -1, message="Not found"});
+                else
+                return Ok(new Result<Product>{ Status = 0, Data = data});
             }
             catch (Exception ex)
             {
