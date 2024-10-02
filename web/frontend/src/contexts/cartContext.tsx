@@ -1,8 +1,10 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ICart, ICartItem } from "../common/model/cart.ts";
 import { IProduct } from "../common/model/product.ts";
 import React from "react";
+import { CacheService } from "../common/cacheService.ts";
 
+const cartKey = "Cart-Key-486587@wue";
 export const CartContext = createContext<ICart>({
   items: [],
   addItem: () => {},
@@ -13,9 +15,16 @@ export const CartContext = createContext<ICart>({
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const cacheService = new CacheService();
   const [items, setCartItems] = useState<ICartItem[]>([]);
   const [total, setTotal] = useState<number>(0);
-
+  if (items && items.length > 0) {
+    cacheService.addData(items, cartKey);
+  }
+  const cachedData = cacheService.getData<ICartItem[]>(cartKey);
+  if (cachedData && cachedData.length > 0 && items.length == 0) {
+    setCartItems(cachedData);
+  }
   const addItem = (product: IProduct) => {
     setCartItems((prevItems) => {
       // Check if item is already in the cart
@@ -65,6 +74,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         return accumulator + item.total;
       }, 0)
     );
+    cacheService.addData<ICartItem[]>(items, cartKey);
   }
 
   // You can implement removeFromCart, clearCart, etc.
