@@ -1,50 +1,61 @@
-import React,{ useEffect } from 'react';
+import React, { useContext, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import store2_pic from '../assets/img/trainers/trainer-1-2.jpg';
-import { Link } from 'react-router-dom';
-import { applicationConfig } from '../common/environment.ts';
+import store2_pic from "../assets/img/trainers/trainer-1-2.jpg";
+import { Link } from "react-router-dom";
+import { applicationConfig } from "../common/environment.ts";
+import { IProduct } from "../common/model/product.ts";
+import { CartContext } from "../contexts/cartContext.tsx";
 
-export interface IProduct{
-id:number;
-name:string;
-description:string | undefined;
-pictureUrl:string | undefined;
-price: number;
-isSubscription: boolean;
-quantity: number;
-category: string | undefined;
-}
 interface ProductProps {
   product: IProduct;
-  index:number;
+  index: number;
 }
-export default function Product({ product, index }: ProductProps){
-    useEffect(() => {
-        AOS.init({
-          duration: 600,
-          easing: 'ease-in-out',
-          once: true,
-          mirror: false
-        });
-      }, []);
-function getProductPicture(url):string{
-  return `${applicationConfig.backendUrl}${url}`;
-}
-    return (<>
-      <div className="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay={(100 * index)} key={product.id}>
+export default function Product({ product, index }: ProductProps) {
+  const { addItem } = useContext(CartContext);
+  useEffect(() => {
+    AOS.init({
+      duration: 600,
+      easing: "ease-in-out",
+      once: true,
+      mirror: false,
+    });
+  }, []);
+
+  function setToCart() {
+    addItem(product);
+  }
+  function getProductPicture(url): string {
+    return `${applicationConfig.backendUrl}${url}`;
+  }
+  return (
+    <>
+      <div
+        className="col-lg-4 col-md-6 d-flex align-items-stretch"
+        data-aos="zoom-in"
+        data-aos-delay={100 * index}
+        key={product.id}
+      >
         <div className="course-item">
-        <Link to={`/product/${product.id}`}>
-        <img src={getProductPicture(product.pictureUrl)} className="img-fluid" alt="..." />
-        </Link>
-         
+          <Link to={`/product/${product.id}`}>
+            <img
+              src={getProductPicture(product.pictureUrl)}
+              className="img-fluid"
+              alt="..."
+            />
+          </Link>
+
           <div className="course-content">
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <p className="category">{product.name}</p>
+              <p className="category" onClick={setToCart}>
+                Add to cart
+              </p>
               <p className="price">${product.price}</p>
             </div>
 
-            <h3><Link to={`/product/${product.id}`}>{product.name}</Link></h3>
+            <h3>
+              <Link to={`/product/${product.id}`}>{product.name}</Link>
+            </h3>
             <p className="description">{product.description}</p>
             <div className="trainer d-flex justify-content-between align-items-center">
               {/* <div className="trainer-profile d-flex align-items-center">
@@ -52,13 +63,13 @@ function getProductPicture(url):string{
                 <a href="" className="trainer-link">Antonio</a>
               </div> */}
               <div className="trainer-rank d-flex align-items-center">
-                <i className="bi bi-person user-icon"></i>&nbsp;50
-                &nbsp;&nbsp;
+                <i className="bi bi-person user-icon"></i>&nbsp;50 &nbsp;&nbsp;
                 <i className="bi bi-heart heart-icon"></i>&nbsp;65
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>);
+    </>
+  );
 }

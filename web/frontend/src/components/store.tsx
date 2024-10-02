@@ -4,8 +4,9 @@ import "aos/dist/aos.css";
 import PageHeader from './pageHeading.tsx';
 import PageFooter from './pageFooting.tsx';
 import { HttpService } from '../common/httpService.ts';
-import Product, { IProduct } from './product.tsx';
+import Product from './product.tsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { IProduct } from '../common/model/product.ts';
 
 export default function Store(){
   const [products, setProducts] = useState<IProduct[]>([]);
