@@ -61,7 +61,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   function setTotalValue() {
     const filtered = items.filter((x) => x.quantity > 0);
     setTotal(
-      items.reduce((accumulator, item) => {
+      filtered.reduce((accumulator, item) => {
         return accumulator + item.total;
       }, 0)
     );
