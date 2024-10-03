@@ -4,9 +4,11 @@ import "aos/dist/aos.css";
 import { CartContext } from "../contexts/cartContext.tsx";
 import "../assets/css/cart.css";
 import { applicationConfig } from "../common/environment.ts";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { UserService } from "../common/userService.ts";
 
-export default function Cart() {
+export default function Checkout() {
+  const [searchParams] = useSearchParams();
   const hasFetched = useRef(false);
   const { items, removeItem } = useContext(CartContext);
   let total = items.reduce((total, item) => total + item.total, 0);
@@ -22,7 +24,15 @@ export default function Cart() {
     if (!hasFetched.current) {
       hasFetched.current = true;
     }
+    validateUser();
   }, []);
+
+  function validateUser() {
+    const userService = new UserService();
+    if (!userService.isUserLoggedIn()) {
+      window.location.href = `/login?from=checkout`;
+    }
+  }
 
   function getProductPicture(url): string {
     return `${applicationConfig.backendUrl}${url}`;
@@ -79,7 +89,7 @@ export default function Cart() {
         </div>
         <div className="row text-center py-3">
           <Link
-            to={"/checkout?from=cart"}
+            to={"/chechout?from=cart"}
             hidden={items.length == 0}
             className="btn btn-lg btn-warning"
           >
