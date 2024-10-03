@@ -14,6 +14,7 @@ import "./assets/js/main";
 import ProductDetail from "./components/productDetail.tsx";
 import Login from "./components/login.tsx";
 import { CartProvider } from "./contexts/cartContext.tsx";
+import Cart from "./components/cart.tsx";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/product" element={<ProductDetail />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>
     </CartProvider>

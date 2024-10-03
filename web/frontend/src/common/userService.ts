@@ -1,0 +1,41 @@
+import { CacheService } from "./cacheService.ts";
+import { HttpService } from "./httpService.ts";
+import { LoginInfo, User } from "./model/user.ts";
+
+const userKey = "UserSystem$jnll23949@##%";
+export class UserService {
+  cache = new CacheService();
+  http = new HttpService<any>("auth");
+
+  getUser(): User {
+    const user = this.cache.getData<User>(userKey);
+    return user;
+  }
+
+  isUserLoggedIn(): boolean {
+    const user = this.cache.getData<User>(userKey) ? true : false;
+    return user;
+  }
+
+  addUser(user: User) {
+    this.cache.addData(user, userKey);
+  }
+  logout() {
+    this.cache.removeData(userKey);
+    this.http.Post({}, "logout").then((r) => console.log("session ended"));
+  }
+  getToken(): string {
+    const user = this.cache.getData<User>(userKey);
+    return user?.authToken;
+  }
+
+  login(login: LoginInfo) {
+    this.http.Post(login, "login").then((r) => {
+      if (r.status < 0) alert(r.message);
+      else {
+        this.addUser(r.data as User);
+        window.location.href = "/";
+      }
+    });
+  }
+}

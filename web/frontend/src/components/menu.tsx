@@ -12,8 +12,10 @@ import {
 import { useContext, useEffect } from "react";
 import React from "react";
 import { CartContext } from "../contexts/cartContext.tsx";
+import { UserService } from "../common/userService.ts";
 
 function MainMenu() {
+  const userService = new UserService();
   const { items } = useContext(CartContext);
   const totalItems = items.reduce((total, item) => total + item.quantity, 0);
   const location = useLocation();
@@ -66,8 +68,19 @@ function MainMenu() {
                 </span>
               </div>
             </Link>
-            <Link to="login" className="btn-getstarted">
+            <Link
+              hidden={userService.isUserLoggedIn()}
+              to="/login"
+              className="btn-getstarted"
+            >
               Login
+            </Link>
+            <Link
+              hidden={!userService.isUserLoggedIn()}
+              to="/account"
+              className="btn-getstarted"
+            >
+              My Acount
             </Link>
           </div>
         </header>
