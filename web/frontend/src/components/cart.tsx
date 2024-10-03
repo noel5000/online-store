@@ -15,7 +15,8 @@ import { ICartItem } from "../common/model/cart.ts";
 export default function Cart() {
   const hasFetched = useRef(false);
   const { items, removeItem } = useContext(CartContext);
-  const total = items.reduce((total, item) => total + item.total, 0);
+  let total = items.reduce((total, item) => total + item.total, 0);
+  total = Math.round(total);
   const totalItems = items.reduce((total, item) => total + item.quantity, 0);
   useEffect(() => {
     AOS.init({
@@ -58,7 +59,7 @@ export default function Cart() {
                     <span className="ms-3">
                       <input
                         type="button"
-                        className="btn btn-sm btn-danger"
+                        className="btn btn-sm btn-link"
                         value="Delete"
                         onClick={() => removeItem(item.product)}
                       ></input>
@@ -82,8 +83,17 @@ export default function Cart() {
             Subtotal ({totalItems} items): ${total}
           </h5>
         </div>
+        <div className="row text-center">
+          <button
+            type="button"
+            className="btn btn-lg btn-warning"
+            value="Checkout"
+            hidden={items.length == 0}
+          >
+            Checkout
+          </button>
+        </div>
       </div>
-      <PageFooter />
     </>
   );
 }
