@@ -1,0 +1,26 @@
+.cart-item {
+  border-bottom: 1px solid #ddd;
+  padding: 20px 0;
+}
+.cart-item img {
+  max-width: 100px;
+}
+.cart-item h5 {
+  margin: 0;
+}
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.cart-summary {
+  text-align: right;
+  padding-top: 20px;
+}
+.cart-summary h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.breadcrumbs {
+  background-color: #f8f9fa;
+  padding: 10px;
+}
