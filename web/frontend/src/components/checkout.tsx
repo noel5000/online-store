@@ -329,7 +329,11 @@ export default function Checkout() {
                     {...register("cardNumber", {
                       required: "The card number is required",
                       maxLength: 16,
-                      minLength: 16
+                      minLength: 16,
+                      pattern: {
+                        value: /^[0-9]{16}$/,
+                        message: "Card number must be a 16-digit number."
+                      }
                     })}
                   />
                   <div className="invalid-feedback">
@@ -350,7 +354,11 @@ export default function Checkout() {
                     {...register("expiration", {
                       required: "The card expiration date is required",
                       maxLength: 5,
-                      minLength: 5
+                      minLength: 5,
+                      pattern: {
+                        value: /^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
+                        message: "Expiration date must be in MM/YY format."
+                      }
                     })}
                   />
                   <div className="invalid-feedback">
@@ -369,15 +377,17 @@ export default function Checkout() {
                     className="form-control"
                     id="cvv"
                     {...register("cvv", {
-                      required: "The security code is required",
+                      required: true,
                       maxLength: 3,
-                      minLength: 3
+                      minLength: 3,
+                      pattern: {
+                        value: /^[0-9]{3}$/,
+                        message: "CVV must be a 3-digit number."
+                      }
                     })}
                   />
                   <div className="invalid-feedback">
-                    {errors && errors.expiration
-                      ? errors.expiration.message
-                      : ""}
+                    {errors && errors.cvv ? errors.cvv.message : ""}
                   </div>
                 </div>
               </div>
