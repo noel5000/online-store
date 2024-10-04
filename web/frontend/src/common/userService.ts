@@ -22,7 +22,7 @@ export class UserService {
   }
   logout() {
     this.cache.removeData(userKey);
-    this.http.Post({}, "logout").then((r) => console.log("session ended"));
+    window.location.href = "/";
   }
   getToken(): string {
     const user = this.cache.getData<User>(userKey);

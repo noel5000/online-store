@@ -7,7 +7,7 @@ import {
   Route,
   Routes,
   Link,
-  useLocation,
+  useLocation
 } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import React from "react";
@@ -22,7 +22,7 @@ function MainMenu() {
   const routes = [
     { route: "/", label: "Store", id: 0 },
     { route: "/subscription", label: "Subscriptions", id: 2 },
-    { route: "/contact", label: "Contact Us", id: 3 },
+    { route: "/contact", label: "Contact Us", id: 3 }
   ];
   function isRouteActive(route) {
     if (route === "/") {
@@ -33,6 +33,10 @@ function MainMenu() {
   }
 
   function renderMenu() {
+    const logout = function () {
+      const userService = new UserService();
+      userService.logout();
+    };
     return (
       <>
         <header
@@ -57,6 +61,11 @@ function MainMenu() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <a hidden={!userService.isUserLoggedIn()} onClick={logout}>
+                    Logout
+                  </a>
+                </li>
               </ul>
               <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
