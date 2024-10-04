@@ -95,6 +95,7 @@ namespace OnlineStore.Services
                 ProductId = product.Id,
                 SubscriptionId = subscription is not null? subscription.Id : null,
                 UserId=user.Id,
+                OrderId = order.Data.AzulOrderId.ToString()
             });
              _context.SaveChanges();
             });

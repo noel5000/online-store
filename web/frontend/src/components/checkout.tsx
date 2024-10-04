@@ -12,7 +12,7 @@ import { states } from "../common/model/localizationData.ts";
 import { HttpService } from "../common/httpService.ts";
 
 export default function Checkout() {
-  const { items } = useContext(CartContext);
+  const { items, clear } = useContext(CartContext);
   let total = items.reduce((total, item) => total + item.total, 0);
   total = Math.round(total);
   const totalItems = items.reduce((total, item) => total + item.quantity, 0);
@@ -42,6 +42,7 @@ export default function Checkout() {
       .then((r) => {
         if (r.status < 0) alert(r.message);
         else {
+          clear();
           window.location.href = "/paymentsuccess";
         }
       })
