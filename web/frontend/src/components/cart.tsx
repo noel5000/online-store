@@ -79,7 +79,7 @@ export default function Cart() {
         </div>
         <div className="row text-center py-3">
           <Link
-            to={"/checkout?from=cart"}
+            to={"/checkout"}
             hidden={items.length == 0}
             className="btn btn-lg btn-warning"
           >
