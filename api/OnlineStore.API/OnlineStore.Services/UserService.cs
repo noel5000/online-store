@@ -30,15 +30,15 @@ namespace OnlineStore.Services
             _appSettings = appSettings;
         }
 
-        public async Task<Result<User>> GetUser(string id)
+        public async Task<Result<User>> GetUserAsync(string id)
         {
-            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x=> x.Id == id);
+            var user = await _userManager.FindByEmailAsync(id);
             if(user is null)
                 return new Result<User>{Status = -1, Message = "User not found"};
             return new Result<User>{Data = user, Message= "Ok"};
         }
 
-        public async Task<Result<TokenVm>> Login(LoginVM vm)
+        public async Task<Result<TokenVm>> LoginAsync(LoginVM vm)
         {
             var user = await _userManager.FindByEmailAsync(vm.Email);
             if(user is null)
@@ -58,7 +58,7 @@ namespace OnlineStore.Services
 
         }
 
-        public async Task<Result<TokenVm>> RegisterUser(RegisterUserVM vm)
+        public async Task<Result<TokenVm>> RegisterUserAsync(RegisterUserVM vm)
         {
             var createResult = await _userManager.CreateAsync(new User
             {
@@ -90,7 +90,7 @@ namespace OnlineStore.Services
             return new Result<TokenVm>{Data = token};
         }
 
-        public async Task<Result<User>> UpdateUser(User user)
+        public async Task<Result<User>> UpdateUserAsync(User user)
         {
            var updateResult = await _userManager.UpdateAsync(user);
            if(!updateResult.Succeeded)

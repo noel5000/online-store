@@ -13,7 +13,8 @@ export interface IHttpResult<T> {
 export interface IHttpService<T> {
   GetOdata(queryParams: string | undefined): Promise<any>;
   GetAll(queryParams: string | undefined): Promise<IHttpResult<T[]>>;
-  Get(id: number): Promise<IHttpResult<T>>;
+  Get(id: string): Promise<IHttpResult<T>>;
+  GetGeneric<W>(url: string): Promise<IHttpResult<W>>;
   Delete(id: number): Promise<IHttpResult<object>>;
   Post(data: T, queryParams: string | undefined): Promise<IHttpResult<T>>;
   Put(data: T, queryParams: string | undefined): Promise<IHttpResult<T>>;
@@ -28,11 +29,11 @@ export class HttpService<T> implements IHttpService<T> {
   }
 
   getHeaders(): any {
-    const userData = this.cache.getData<User>(userKey);
+    const userData = this.cache.getData<any>(userKey);
 
     return {
       "content-type": "application/json",
-      authorization: `Bearer ${userData?.authToken}`,
+      authorization: `Bearer ${userData?.tokenKey}`
     };
   }
   setOdataUrl(): string {
@@ -50,7 +51,7 @@ export class HttpService<T> implements IHttpService<T> {
           ? `${this.setOdataUrl()}?${queryParams}`
           : this.setOdataUrl(),
         {
-          headers: this.getHeaders(),
+          headers: this.getHeaders()
         }
       )
     ).data;
@@ -60,22 +61,30 @@ export class HttpService<T> implements IHttpService<T> {
       await axiosInstance.get<IHttpResult<T[]>>(
         queryParams ? `${this.endpointUrl}/${queryParams}` : this.endpointUrl,
         {
-          headers: this.getHeaders(),
+          headers: this.getHeaders()
         }
       )
     ).data;
   }
-  async Get(id: number): Promise<IHttpResult<T>> {
+  async Get(id: string): Promise<IHttpResult<T>> {
     return (
       await axiosInstance.get<IHttpResult<T>>(`${this.endpointUrl}/${id}`, {
-        headers: this.getHeaders(),
+        headers: this.getHeaders()
       })
     ).data;
   }
+  async GetGeneric<W>(url: string): Promise<IHttpResult<W>> {
+    return (
+      await axiosInstance.get<IHttpResult<W>>(`${this.endpointUrl}/${url}`, {
+        headers: this.getHeaders()
+      })
+    ).data;
+  }
+
   async Delete(id: number): Promise<IHttpResult<object>> {
     return (
       await axios.delete<IHttpResult<object>>(`${this.endpointUrl}/${id}`, {
-        headers: this.getHeaders(),
+        headers: this.getHeaders()
       })
     ).data;
   }
@@ -88,7 +97,7 @@ export class HttpService<T> implements IHttpService<T> {
         queryParams ? `${this.endpointUrl}/${queryParams}` : this.endpointUrl,
         data,
         {
-          headers: this.getHeaders(),
+          headers: this.getHeaders()
         }
       )
     ).data;
@@ -99,7 +108,7 @@ export class HttpService<T> implements IHttpService<T> {
         queryParams ? `${this.endpointUrl}/${queryParams}` : this.endpointUrl,
         data,
         {
-          headers: this.getHeaders(),
+          headers: this.getHeaders()
         }
       )
     ).data;
@@ -113,7 +122,7 @@ export class HttpService<T> implements IHttpService<T> {
         queryParams ? `${this.endpointUrl}/${queryParams}` : this.endpointUrl,
         data,
         {
-          headers: this.getHeaders(),
+          headers: this.getHeaders()
         }
       )
     ).data;

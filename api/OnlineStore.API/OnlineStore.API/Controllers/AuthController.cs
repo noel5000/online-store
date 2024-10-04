@@ -27,7 +27,7 @@ namespace OnlineStore.API.Controllers
         {
             try
             {
-                return Ok(await _userService.Login(vm));
+                return Ok(await _userService.LoginAsync(vm));
             }
             catch (Exception ex)
             {
@@ -40,7 +40,7 @@ namespace OnlineStore.API.Controllers
         {
             try
             {
-                return Ok(await _userService.RegisterUser(vm));
+                return Ok(await _userService.RegisterUserAsync(vm));
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace OnlineStore.API.Controllers
         {
             try
             {
-                return Ok(await _userService.UpdateUser(vm));
+                return Ok(await _userService.UpdateUserAsync(vm));
             }
             catch (Exception ex)
             {
@@ -62,13 +62,13 @@ namespace OnlineStore.API.Controllers
         }
 
 
-        [HttpGet("GetUserInfo/{id}")]
+        [HttpGet("GetUserInfo/{email}")]
         [CustomAuthorize(["user"])]
-        public async Task<IActionResult> GetUserInfoAsync(string id)
+        public async Task<IActionResult> GetUserInfoAsync(string email)
         {
             try
             {
-                return Ok(await _userService.GetUser(id));
+                return Ok(await _userService.GetUserAsync(email));
             }
             catch (Exception ex)
             {

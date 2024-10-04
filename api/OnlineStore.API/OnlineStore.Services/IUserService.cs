@@ -11,9 +11,9 @@ namespace OnlineStore.Services
 {
     public interface IUserService
     {
-        Task<Result<TokenVm>> RegisterUser(RegisterUserVM vm);
-        Task<Result<TokenVm>> Login(LoginVM vm);
-        Task<Result<User>> GetUser(string id);
-        Task<Result<User>> UpdateUser(User user);
+        Task<Result<TokenVm>> RegisterUserAsync(RegisterUserVM vm);
+        Task<Result<TokenVm>> LoginAsync(LoginVM vm);
+        Task<Result<User>> GetUserAsync(string id);
+        Task<Result<User>> UpdateUserAsync(User user);
     }
 }

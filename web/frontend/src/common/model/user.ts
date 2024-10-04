@@ -26,3 +26,11 @@ export interface IRegisterUser {
   zipCode: string;
   shippingIsBilling: boolean;
 }
+
+export interface ICheckout extends IRegisterUser {
+  cardType: number;
+  nameOnCard: string;
+  cardNumber: string;
+  expiration: string;
+  cvv: number;
+}
