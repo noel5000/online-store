@@ -46,7 +46,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddTransient<TokenServices>();
 builder.Services.AddTransient<EmailTemplates>();
-builder.Services.AddTransient<IAzulService, AzulService>();
+builder.Services.AddTransient<IAzulService, AzulTestService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IInvoiceService, InvoiceService>();
 

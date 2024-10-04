@@ -22,7 +22,7 @@ namespace OnlineStore.Data
         public int? SubscriptionId { get; set; }
         public string? AzulResponse { get; set; }
 
-        public string OrderId { get; set; } = DateTime.Now.Ticks.ToString();
+        public string OrderId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

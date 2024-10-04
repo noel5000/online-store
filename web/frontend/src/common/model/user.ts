@@ -1,3 +1,5 @@
+import { ICartItem } from "./cart";
+
 export interface User {
   id: string;
   name: string;
@@ -33,4 +35,5 @@ export interface ICheckout extends IRegisterUser {
   cardNumber: string;
   expiration: string;
   cvv: number;
+  items?: any[];
 }

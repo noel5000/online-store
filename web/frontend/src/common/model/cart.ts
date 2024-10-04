@@ -10,4 +10,5 @@ export interface ICartItem {
   quantity: number;
   product: IProduct;
   total: number;
+  productId: number | 0;
 }

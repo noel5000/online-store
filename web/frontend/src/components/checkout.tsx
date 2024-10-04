@@ -26,6 +26,28 @@ export default function Checkout() {
     }
   }, []);
 
+  function processCheckout(data: ICheckout) {
+    data.items = items.map((item) => {
+      return {
+        quantity: item.quantity,
+        productId: item.product?.id,
+        total: item.total,
+        product: null
+      };
+    });
+    const service = new HttpService<any>("invoice");
+    service
+      .Post(data, "")
+
+      .then((r) => {
+        if (r.status < 0) alert(r.message);
+        else {
+          window.location.href = "/paymentsuccess";
+        }
+      })
+      .catch((e) => console.log(e));
+  }
+
   function fetchUserData() {
     userService
       .GetGeneric<IRegisterUser>(
@@ -56,7 +78,7 @@ export default function Checkout() {
   } = useForm<ICheckout>();
 
   const onSubmit: SubmitHandler<ICheckout> = (data) => {
-    console.log(data);
+    processCheckout(data);
   };
 
   function validateUser() {
@@ -89,10 +111,10 @@ export default function Checkout() {
                     key={index}
                   >
                     <div>
-                      <h6 className="my-0">{item.product.name}</h6>
+                      <h6 className="my-0">{item.product?.name}</h6>
                     </div>
                     <span className="text-muted">
-                      ({item.quantity}) ${item.product.price}
+                      ({item.quantity}) ${item.product?.price}
                     </span>
                   </li>
                 );

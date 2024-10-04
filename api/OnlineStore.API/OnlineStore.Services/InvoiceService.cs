@@ -7,6 +7,7 @@ using OnlineStore.Data;
 using OnlineStore.Data.ViewModels;
 using OnlineStore.Database;
 using OnlineStore.Services.Email;
+using System.Linq;
 
 namespace OnlineStore.Services
 {
@@ -36,22 +37,26 @@ namespace OnlineStore.Services
         {
             var user = await ValidateUser(vm);
             Subscription? subscription = null;
-            var product =await _context.Products.FindAsync(vm.ProductId);
             var order = await _azulService.ProcessPayment(new()
             {
-                Amount = product.Price * vm.Quantity,
+                Amount = vm.Items.Sum(x=>x.Total),
                 CardNumber = vm.CardNumber,
                 CVC = vm.Cvv,
                 Itbis = 0,
-                Expiration = Convert.ToInt32(vm.CardExpiration),
+                Expiration = Convert.ToInt32(vm.Expiration.Replace("/","")),
                 DataVaultToken = user.AzulVaultTokenId??"",
             });
             if (order?.Status < 0)
                 return new Result<object> { Status = -1, Message = order.Message};
 
+            vm.Items.ToList().ForEach( item => {
+                var product = _context.Products.AsNoTracking().FirstOrDefault(x=> x.Id == item.ProductId);
+                if(product is null)
+                    throw new Exception("Invalid product/service");
+
             if (product.IsSubscriptionBased) 
             {
-                var currentSubscription = await _context.Subscriptions.AsNoTracking().FirstOrDefaultAsync(x => x.UserId == user.Id && x.ProductId == vm.ProductId);
+                var currentSubscription =  _context.Subscriptions.AsNoTracking().FirstOrDefault(x => x.UserId == user.Id && x.ProductId == product.Id);
                 if (currentSubscription is null)
                 {
                     var addResult = _context.Subscriptions.Add(new Subscription()
@@ -65,34 +70,36 @@ namespace OnlineStore.Services
                         StartDate = DateTime.Now,
                         Payments = [new SubscriptionPayment()
                         {
-                            Amount = vm.Quantity * product.Price,
+                            Amount = item.Total,
                             Date = DateTime.Now,
                             ProcessResponse = JsonConvert.SerializeObject(order)
                         }]
 
                     });
-                    await _context.SaveChangesAsync();
+                     _context.SaveChanges();
                     subscription = addResult.Entity;
                 }
                 else
                     subscription = currentSubscription;
             }
 
-          var invoice =  await _context.Invoices.AddAsync(new() 
+          var invoice =  _context.Invoices.Add(new() 
             {
                 Amount = product.Price,
                 AzulResponse = Algorithm.Encrypt( JsonConvert.SerializeObject(order), _appSettings.TokenKey),
-                Quantity = vm.Quantity,
-                TotalAmount = product.Price * vm.Quantity,
+                Quantity = item.Quantity,
+                TotalAmount = product.Price * item.Quantity,
                 Taxes = 0,
                 Date = DateTime.Now,
                 IsSubscription = product.IsSubscriptionBased,
-                ProductId = vm.ProductId,
+                ProductId = product.Id,
                 SubscriptionId = subscription is not null? subscription.Id : null,
                 UserId=user.Id,
             });
-            await _context.SaveChangesAsync();
-            if (string.IsNullOrEmpty(user.AzulVaultTokenId))
+             _context.SaveChanges();
+            });
+
+            if (string.IsNullOrEmpty(user.AzulVaultTokenId) is false)
             {
                 user.AzulCardType = order!.Data!.DataVaultBrand;
                 user.AzulExpirationDate = order.Data.DataVaultExpiration;
@@ -102,7 +109,7 @@ namespace OnlineStore.Services
                 await _userManager.UpdateAsync(user);
             }
 
-            await _emailTemplates.SendInvoiceAsync(invoice.Entity);
+           // await _emailTemplates.SendInvoiceAsync(invoice.Entity);
             return new Result<object>() { Status = 0, Message = "ok", Data  = order };
         }
 
@@ -113,25 +120,25 @@ namespace OnlineStore.Services
             if(existingUser is not null)
                 return existingUser;
 
-            var userCreated = await _userManager.CreateAsync(new()
-            {
-                Email = vm.Email,
-                DocumentId = Algorithm.Encrypt(JsonConvert.SerializeObject(vm.DocumentId), _appSettings.TokenKey),
-                DocumentIdType = "Cedula",
-                FirstName = vm.Name,
-                LastName = vm.LastName,
-                PhoneNumber = vm.PhoneNumber,
-                UserName = vm.Email
-            });
+            // var userCreated = await _userManager.CreateAsync(new()
+            // {
+            //     Email = vm.Email,
+            //     DocumentId = Algorithm.Encrypt(JsonConvert.SerializeObject(vm.DocumentId), _appSettings.TokenKey),
+            //     DocumentIdType = "Cedula",
+            //     FirstName = vm.Name,
+            //     LastName = vm.LastName,
+            //     PhoneNumber = vm.PhoneNumber,
+            //     UserName = vm.Email
+            // });
 
-            if ((userCreated?.Succeeded).GetValueOrDefault()) 
-            {
-                var user = (await _userManager.FindByEmailAsync(vm.Email))!;
-                await _userManager.AddPasswordAsync(user, vm.Password ?? "askdsdkf*&^@");
-                return user;
-            }
-            else
-                throw new Exception($"Error al validar al usuario");
+            // if ((userCreated?.Succeeded).GetValueOrDefault()) 
+            // {
+            //     var user = (await _userManager.FindByEmailAsync(vm.Email))!;
+            //     await _userManager.AddPasswordAsync(user, vm.Password ?? "askdsdkf*&^@");
+            //     return user;
+            // }
+            // else
+                throw new Exception($"Invalid user");
         }
     }
 }

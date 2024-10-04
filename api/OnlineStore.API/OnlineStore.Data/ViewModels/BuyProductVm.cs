@@ -9,24 +9,50 @@ namespace OnlineStore.Data.ViewModels
 {
     public class BuyProductVm
     {
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
         [Required]
         public string Email { get; set; }
+        [Required]
+        public string Address { get; set; }
+        public string? Address2 { get; set; }
+
+
+        [Required]
+        public string Country { get; set; }
+        [Required]
+        public string? State { get; set; }
+
+        [Required]
+        public string ZipCode {get; set;}
+
+        public bool shippingIsBilling {get;set;}
+
 
         public string? UserId { get; set; }
-        public string? Password { get; set; }
         public string? PhoneNumber { get; set; }
-        public string? DocumentId { get; set; }
+        [Required]
+        public string NameOnCard { get; set; }
         [Required]
         public string CardNumber { get; set; }
         [Required]
         public string Cvv { get; set; }
         [Required]
-        public string CardExpiration { get; set; }
+        public string Expiration { get; set; }
+        
+
+
+        public IEnumerable<CartItem> Items {get;set;} = [];
+    }
+
+    public class CartItem {
         [Required]
-    
-        public int ProductId { get; set; }
-        public decimal Quantity { get; set; } = 1;
-        public string Name { get; set; }
-        public string LastName { get; set; }
+        public int ProductId {get;set;}
+        public decimal Quantity {get;set;}
+        public decimal Total {get;set;}
     }
 }
