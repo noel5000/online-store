@@ -1,8 +1,8 @@
 import { CacheService } from "./cacheService.ts";
 import { HttpService } from "./httpService.ts";
-import { LoginInfo, User } from "./model/user.ts";
+import { IRegisterUser, LoginInfo, User } from "./model/user.ts";
 
-const userKey = "UserSystem$jnll23949@##%";
+export const userKey = "UserSystem$jnll23949@##%";
 export class UserService {
   cache = new CacheService();
   http = new HttpService<any>("auth");
@@ -35,6 +35,16 @@ export class UserService {
       else {
         this.addUser(r.data as User);
         window.location.href = "/";
+      }
+    });
+  }
+
+  createUser(user: IRegisterUser, redirect?: string) {
+    this.http.Post(user, "createuser").then((r) => {
+      if (r.status < 0) alert(r.message);
+      else {
+        this.addUser(r.data as User);
+        window.location.href = redirect ? `/${redirect}` : "/";
       }
     });
   }
