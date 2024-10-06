@@ -62,13 +62,13 @@ namespace OnlineStore.API.Controllers
         }
 
 
-        [HttpGet("GetUserInfo/{email}")]
+        [HttpGet("GetUserInfo/{id}")]
         [CustomAuthorize(["user"])]
-        public async Task<IActionResult> GetUserInfoAsync(string email)
+        public async Task<IActionResult> GetUserInfoAsync(string id)
         {
             try
             {
-                return Ok(await _userService.GetUserAsync(email));
+                return Ok(await _userService.GetUserAsync(id));
             }
             catch (Exception ex)
             {

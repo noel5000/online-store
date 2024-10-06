@@ -32,7 +32,7 @@ namespace OnlineStore.Services
 
         public async Task<Result<User>> GetUserAsync(string id)
         {
-            var user = await _userManager.FindByEmailAsync(id);
+            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x=> x.Id == id);
             if(user is null)
                 return new Result<User>{Status = -1, Message = "User not found"};
             return new Result<User>{Data = user, Message= "Ok"};

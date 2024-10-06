@@ -29,12 +29,12 @@ export class UserService {
     return user?.authToken;
   }
 
-  login(login: LoginInfo) {
+  login(login: LoginInfo, from: string | null) {
     this.http.Post(login, "login").then((r) => {
       if (r.status < 0) alert(r.message);
       else {
         this.addUser(r.data as User);
-        window.location.href = "/";
+        window.location.href = `${from ? "/" + from : "/"}`;
       }
     });
   }

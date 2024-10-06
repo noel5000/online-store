@@ -4,7 +4,7 @@ import "aos/dist/aos.css";
 import { CartContext } from "../contexts/cartContext.tsx";
 import "../assets/css/cart.css";
 import { applicationConfig } from "../common/environment.ts";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { UserService } from "../common/userService.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ICheckout, IRegisterUser } from "../common/model/user.ts";
@@ -13,10 +13,10 @@ import { HttpService } from "../common/httpService.ts";
 
 export default function Checkout() {
   const { items, clear } = useContext(CartContext);
+  const navigator = useNavigate();
   let total = items.reduce((total, item) => total + item.total, 0);
   total = Math.round(total);
   const totalItems = items.reduce((total, item) => total + item.quantity, 0);
-
   const hasFetched = useRef(false);
   useEffect(() => {
     validateUser();
@@ -43,31 +43,32 @@ export default function Checkout() {
         if (r.status < 0) alert(r.message);
         else {
           clear();
-          window.location.href = "/paymentsuccess";
+          navigator("/paymentsuccess");
         }
       })
       .catch((e) => console.log(e));
   }
 
   function fetchUserData() {
-    userService
-      .GetGeneric<IRegisterUser>(
-        `GetUserInfo/${new UserService().getUser()["username"]}`
-      )
-      .then((r) => {
-        if (r.status < 0) alert(r.message);
-        const userData = r.data;
-        setValue("firstName", userData.firstName || "");
-        setValue("lastName", userData.lastName || "");
-        setValue("address", userData.address || "");
-        setValue("address2", userData.address2 || "");
-        setValue("zipCode", userData.zipCode || "");
-        setValue("email", userData.email || "");
-        setValue("country", userData.country || "US");
-        setValue("state", userData.state || "");
-        setValue("shippingIsBilling", userData.shippingIsBilling || false);
-      })
-      .catch((e) => console.log(e));
+    if (new UserService().isUserLoggedIn())
+      userService
+        .GetGeneric<IRegisterUser>(
+          `GetUserInfo/${new UserService().getUser().id}`
+        )
+        .then((r) => {
+          if (r.status < 0) alert(r.message);
+          const userData = r.data;
+          setValue("firstName", userData.firstName || "");
+          setValue("lastName", userData.lastName || "");
+          setValue("address", userData.address || "");
+          setValue("address2", userData.address2 || "");
+          setValue("zipCode", userData.zipCode || "");
+          setValue("email", userData.email || "");
+          setValue("country", userData.country || "US");
+          setValue("state", userData.state || "");
+          setValue("shippingIsBilling", userData.shippingIsBilling || false);
+        })
+        .catch((e) => console.log(e));
   }
 
   const userService = new HttpService<IRegisterUser>("auth");
@@ -85,7 +86,7 @@ export default function Checkout() {
   function validateUser() {
     const userService = new UserService();
     if (!userService.isUserLoggedIn()) {
-      window.location.href = `/login?from=checkout`;
+      navigator(`/login?from=checkout`);
     }
   }
 
@@ -324,6 +325,7 @@ export default function Checkout() {
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="Full name as displayed on card"
                     id="nameOnCard"
                     {...register("nameOnCard", {
                       required: "The name on the card is required",
@@ -331,9 +333,6 @@ export default function Checkout() {
                       minLength: 3
                     })}
                   />
-                  <small className="text-muted">
-                    Full name as displayed on card
-                  </small>
                   <div className="invalid-feedback">
                     {errors && errors.nameOnCard
                       ? errors.nameOnCard.message

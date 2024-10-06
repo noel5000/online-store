@@ -16,5 +16,6 @@ namespace OnlineStore.Common
         public char? Gender { get; set; }
         public string[]? Roles { get; set; }
         public string? DocumentId { get; set; }
+        public string? Id {get; set;}
     }
 }

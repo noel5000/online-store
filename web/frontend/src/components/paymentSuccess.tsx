@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useRef } from "react";
 import "../assets/css/paymentSuccess.css";
-import { redirect } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 export default function PaymentSuccess() {
+  const navigate = useNavigate();
   const redirect = function () {
-    window.location.href = "/";
+    navigate("/");
   };
   return (
     <>

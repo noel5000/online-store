@@ -17,7 +17,7 @@ export default function Cart() {
       duration: 600,
       easing: "ease-in-out",
       once: true,
-      mirror: false,
+      mirror: false
     });
     if (!hasFetched.current) {
       hasFetched.current = true;
@@ -34,16 +34,16 @@ export default function Cart() {
         {items.length > 0 ? (
           items.map((item) => {
             return (
-              <div className="row cart-item" key={item.product.id}>
+              <div className="row cart-item" key={item?.product?.id}>
                 <div className="col-md-2">
                   <img
-                    src={getProductPicture(item.product.pictureUrl)}
-                    alt={item.product.name}
+                    src={getProductPicture(item?.product?.pictureUrl)}
+                    alt={item?.product?.name}
                   />
                 </div>
                 <div className="col-md-7">
                   <h5>
-                    {item.product.name}: {item.product.description}
+                    {item?.product?.name}: {item?.product?.description}
                   </h5>
                   <p>In Stock</p>
                   <div>
@@ -55,13 +55,13 @@ export default function Cart() {
                         type="button"
                         className="btn btn-sm btn-link"
                         value="Delete"
-                        onClick={() => removeItem(item.product)}
+                        onClick={() => removeItem(item.product!)}
                       ></input>
                     </span>
                   </div>
                 </div>
                 <div className="col-md-3 text-end">
-                  <span className="price">${item.product.price}</span>
+                  <span className="price">${item.product!.price}</span>
                 </div>
               </div>
             );

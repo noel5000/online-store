@@ -62,9 +62,13 @@ function MainMenu() {
                   </li>
                 ))}
                 <li>
-                  <a hidden={!userService.isUserLoggedIn()} onClick={logout}>
+                  <Link
+                    to={"#"}
+                    onClick={logout}
+                    hidden={!userService.isUserLoggedIn()}
+                  >
                     Logout
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>

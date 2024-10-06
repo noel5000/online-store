@@ -49,6 +49,7 @@ public class TokenServices
             Username = appUser.UserName,
             Roles = roles,
             DocumentId = appUser.DocumentId,
+            Id = appUser.Id
         };
 
     }
