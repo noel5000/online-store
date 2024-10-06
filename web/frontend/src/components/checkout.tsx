@@ -52,9 +52,7 @@ export default function Checkout() {
   function fetchUserData() {
     if (new UserService().isUserLoggedIn())
       userService
-        .GetGeneric<IRegisterUser>(
-          `GetUserInfo/${new UserService().getUser().id}`
-        )
+        .GetGeneric<IRegisterUser>(`GetUserInfo`)
         .then((r) => {
           if (r.status < 0) alert(r.message);
           const userData = r.data;
