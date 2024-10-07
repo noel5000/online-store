@@ -32,29 +32,29 @@ namespace OnlineStore.Services
 
         public async Task<Result<User>> GetUserAsync(string id)
         {
-            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x=> x.Id == id);
-            if(user is null)
-                return new Result<User>{Status = -1, Message = "User not found"};
-            return new Result<User>{Data = user, Message= "Ok"};
+            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            if (user is null)
+                return new Result<User> { Status = -1, Message = "User not found" };
+            return new Result<User> { Data = user, Message = "Ok" };
         }
 
         public async Task<Result<TokenVm>> LoginAsync(LoginVM vm)
         {
             var user = await _userManager.FindByEmailAsync(vm.Email);
-            if(user is null)
-                return new Result<TokenVm>{Status = -1, Message = "User not found"};
+            if (user is null)
+                return new Result<TokenVm> { Status = -1, Message = "User not found" };
 
             var isValidPassword = await _userManager.CheckPasswordAsync(user, vm.Password);
-            if(!isValidPassword)
-                return new Result<TokenVm>{Status =-1, Message= "Invalid credentials"};
-            
+            if (!isValidPassword)
+                return new Result<TokenVm> { Status = -1, Message = "Invalid credentials" };
+
             var token = _tokenService.Generate(user);
 
             if (token is null)
-                return new Result<TokenVm>{Status = -1, Message = "Login error"};
-            
-            return new Result<TokenVm>{Data = token};
-            
+                return new Result<TokenVm> { Status = -1, Message = "Login error" };
+
+            return new Result<TokenVm> { Data = token };
+
 
         }
 
@@ -74,29 +74,40 @@ namespace OnlineStore.Services
                 UserName = vm.Email
             });
 
-            if(createResult.Succeeded is false)
-                return new Result<TokenVm>{Status =-1, Message =createResult.ToString()};
-            
+            if (createResult.Succeeded is false)
+                return new Result<TokenVm> { Status = -1, Message = createResult.ToString() };
+
             var user = await _userManager.FindByEmailAsync(vm.Email);
             var passwordResult = await _userManager.AddPasswordAsync(user!, vm.Password);
-            if(!passwordResult.Succeeded)
-                return new Result<TokenVm>{Status = -1, Message = passwordResult.ToString()};
-            
-             var token = _tokenService.Generate(user!, ["user"]);
+            if (!passwordResult.Succeeded)
+                return new Result<TokenVm> { Status = -1, Message = passwordResult.ToString() };
+
+            var token = _tokenService.Generate(user!, ["user"]);
 
             if (token is null)
-                return new Result<TokenVm>{Status = -1, Message = "Login error"};
-            
-            return new Result<TokenVm>{Data = token};
+                return new Result<TokenVm> { Status = -1, Message = "Login error" };
+
+            return new Result<TokenVm> { Data = token };
         }
 
         public async Task<Result<User>> UpdateUserAsync(User user)
         {
-           var updateResult = await _userManager.UpdateAsync(user);
-           if(!updateResult.Succeeded)
-           return new Result<User>{Status = -1, Message =updateResult.ToString()};
+            var dbUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == user.Id);
+            if (dbUser == null)
+                return new Result<User> { Status = -1, Message = "User not found." };
+            dbUser.FirstName = user.FirstName;
+            dbUser.LastName = user.LastName;
+            dbUser.PhoneNumber = user.PhoneNumber;
+            dbUser.Address = user.Address;
+            dbUser.Address2 = user.Address2;
+            dbUser.ZipCode = user.ZipCode;
+            dbUser.Country = user.Country;
+            dbUser.State = user.State;
+            dbUser.ShippingIsBilling = user.ShippingIsBilling;
+            _context.Users.Update(dbUser);
+            await _context.SaveChangesAsync();
 
-           return new Result<User>{Message = "OK"};
+            return new Result<User> { Message = "OK" };
         }
     }
 }

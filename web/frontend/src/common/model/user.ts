@@ -27,6 +27,7 @@ export interface IRegisterUser {
   address2?: string | null;
   zipCode: string;
   shippingIsBilling: boolean;
+  phoneNumber?:string | null;
 }
 
 export interface ICheckout extends IRegisterUser {

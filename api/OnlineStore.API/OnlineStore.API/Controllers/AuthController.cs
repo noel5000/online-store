@@ -49,10 +49,12 @@ namespace OnlineStore.API.Controllers
         }
 
         [HttpPut("UpdateUser")]
+        [CustomAuthorize(["user"])]
         public async Task<IActionResult> UpdateUserAsync([FromBody] User vm)
         {
             try
             {
+                vm.Id = Request.GetUserId();
                 return Ok(await _userService.UpdateUserAsync(vm));
             }
             catch (Exception ex)
@@ -68,7 +70,7 @@ namespace OnlineStore.API.Controllers
         {
             try
             {
-                return Ok(await _userService.GetUserAsync(Request.GetUserId(Request.HttpContext)));
+                return Ok(await _userService.GetUserAsync(Request.GetUserId()));
             }
             catch (Exception ex)
             {

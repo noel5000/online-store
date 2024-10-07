@@ -9,14 +9,14 @@ namespace Microsoft.AspNetCore.Http
 {
     public static class SecurityHelpers
     {
-       public static string GetUserId(this HttpRequest request, HttpContext httpContext)
+       public static string GetUserId(this HttpRequest request)
        {
-         if (httpContext is null)
+         if (request.HttpContext is null)
                 {
                    return string.Empty;
                 }
 
-                var currentToken = httpContext!.Request.Headers.FirstOrDefault(x => x.Key == "Authorization").Value.ToString();
+                var currentToken = request.HttpContext!.Request.Headers.FirstOrDefault(x => x.Key == "Authorization").Value.ToString();
 
                 try
                 {

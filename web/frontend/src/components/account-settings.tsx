@@ -12,11 +12,7 @@ import { states } from "../common/model/localizationData.ts";
 import { HttpService } from "../common/httpService.ts";
 
 export default function AccountSettings() {
-  const { items, clear } = useContext(CartContext);
   const navigator = useNavigate();
-  let total = items.reduce((total, item) => total + item.total, 0);
-  total = Math.round(total);
-  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
   const hasFetched = useRef(false);
   useEffect(() => {
     validateUser();
@@ -27,23 +23,16 @@ export default function AccountSettings() {
   }, []);
 
   function saveUserInfo(data: ICheckout) {
-    data.items = items.map((item) => {
-      return {
-        quantity: item.quantity,
-        productId: item.product?.id,
-        total: item.total,
-        product: null
-      };
-    });
-    const service = new HttpService<any>("invoice");
+   
+    const service = new HttpService<any>("auth");
     service
-      .Post(data, "")
+      .Put(data, "UpdateUser")
 
       .then((r) => {
         if (r.status < 0) alert(r.message);
         else {
-          clear();
-          navigator("/paymentsuccess");
+          alert('Information updated successfully');
+          navigator("/account");
         }
       })
       .catch((e) => console.log(e));
@@ -63,6 +52,7 @@ export default function AccountSettings() {
           setValue("zipCode", userData.zipCode || "");
           setValue("email", userData.email || "");
           setValue("country", userData.country || "US");
+          setValue("phoneNumber", userData.phoneNumber || "");
           setValue("state", userData.state || "");
           setValue("shippingIsBilling", userData.shippingIsBilling || false);
         })
@@ -142,6 +132,25 @@ export default function AccountSettings() {
                 </div>
 
                 <div className="col-12">
+                  <label htmlFor="phoneNumber" className="form-label">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="phoneNumber"
+                    {...register("phoneNumber", {
+                      required: false,
+                      maxLength: 50,
+                      minLength: 3
+                    })}
+                  />
+                  <div className="invalid-feedback">
+                    {errors && errors.phoneNumber ? errors.phoneNumber.message : ""}
+                  </div>
+                </div>
+
+                <div className="col-12">
                   <label htmlFor="email" className="form-label">
                     Email
                   </label>
@@ -152,6 +161,7 @@ export default function AccountSettings() {
                     placeholder="you@example.com"
                     {...register("email", {
                       required: "The email is required",
+                      disabled:true,
                       maxLength: 50,
                       minLength: 3,
                       pattern: {
@@ -283,109 +293,8 @@ export default function AccountSettings() {
 
               <hr className="my-4" />
 
-              <h4 className="mb-3">Payment</h4>
-
-              <div className="row gy-3">
-                <div className="col-md-6">
-                  <label htmlFor="nameOnCard" className="form-label">
-                    Name on card
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Full name as displayed on card"
-                    id="nameOnCard"
-                    {...register("nameOnCard", {
-                      required: "The name on the card is required",
-                      maxLength: 50,
-                      minLength: 3
-                    })}
-                  />
-                  <div className="invalid-feedback">
-                    {errors && errors.nameOnCard
-                      ? errors.nameOnCard.message
-                      : ""}
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="cardNumber" className="form-label">
-                    Credit card number
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cardNumber"
-                    {...register("cardNumber", {
-                      required: "The card number is required",
-                      maxLength: 16,
-                      minLength: 16,
-                      pattern: {
-                        value: /^[0-9]{16}$/,
-                        message: "Card number must be a 16-digit number."
-                      }
-                    })}
-                  />
-                  <div className="invalid-feedback">
-                    {errors && errors.cardNumber
-                      ? errors.cardNumber.message
-                      : ""}
-                  </div>
-                </div>
-
-                <div className="col-md-3">
-                  <label htmlFor="expiration" className="form-label">
-                    Expiration
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="expiration"
-                    {...register("expiration", {
-                      required: "The card expiration date is required",
-                      maxLength: 5,
-                      minLength: 5,
-                      pattern: {
-                        value: /^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
-                        message: "Expiration date must be in MM/YY format."
-                      }
-                    })}
-                  />
-                  <div className="invalid-feedback">
-                    {errors && errors.expiration
-                      ? errors.expiration.message
-                      : ""}
-                  </div>
-                </div>
-
-                <div className="col-md-3">
-                  <label htmlFor="cvv" className="form-label">
-                    CVV
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cvv"
-                    {...register("cvv", {
-                      required: true,
-                      maxLength: 3,
-                      minLength: 3,
-                      pattern: {
-                        value: /^[0-9]{3}$/,
-                        message: "CVV must be a 3-digit number."
-                      }
-                    })}
-                  />
-                  <div className="invalid-feedback">
-                    {errors && errors.cvv ? errors.cvv.message : ""}
-                  </div>
-                </div>
-              </div>
-
-              <hr className="my-4" />
-
               <button className="w-100 btn btn-primary btn-lg" type="submit">
-                Complete Order
+                Save changes
               </button>
             </form>
           </div>
