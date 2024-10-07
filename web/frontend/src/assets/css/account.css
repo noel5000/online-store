@@ -1,0 +1,47 @@
+.account-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.account-card h5 {
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.account-card p {
+  color: #666;
+}
+
+.account-card img {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-section {
+  display: flex;
+  align-items: center;
+}
+
+.icon-section img {
+  margin-right: 15px;
+}
+
+.icon-section .text-section {
+  flex-grow: 1;
+}
+
+/* Adjust for mobile responsiveness */
+@media (max-width: 576px) {
+  .account-card {
+    padding: 15px;
+  }
+}

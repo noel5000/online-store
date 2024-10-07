@@ -18,6 +18,7 @@ import Cart from "./components/cart.tsx";
 import Checkout from "./components/checkout.tsx";
 import Register from "./components/register.tsx";
 import PaymentSuccess from "./components/paymentSuccess.tsx";
+import Account from "./components/account.tsx";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/register" element={<Register />} />
           <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
       </Router>
     </CartProvider>
