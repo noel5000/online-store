@@ -20,6 +20,7 @@ import Register from "./components/register.tsx";
 import PaymentSuccess from "./components/paymentSuccess.tsx";
 import Account from "./components/account.tsx";
 import AccountSettings from "./components/account-settings.tsx";
+import UserOrders from "./components/user-orders.tsx";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/paymentsuccess" element={<PaymentSuccess />} />
           <Route path="/account" element={<Account />} />
           <Route path="/account-settings" element={<AccountSettings />} />
+          <Route path="/user-orders" element={<UserOrders />} />
         </Routes>
       </Router>
     </CartProvider>

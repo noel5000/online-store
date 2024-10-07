@@ -5,6 +5,7 @@ import { CartContext } from "../contexts/cartContext.tsx";
 import "../assets/css/cart.css";
 import { applicationConfig } from "../common/environment.ts";
 import { Link } from "react-router-dom";
+import { getProductPicture } from "./product.tsx";
 
 export default function Cart() {
   const hasFetched = useRef(false);
@@ -24,9 +25,6 @@ export default function Cart() {
     }
   }, []);
 
-  function getProductPicture(url): string {
-    return `${applicationConfig.backendUrl}${url}`;
-  }
   return (
     <>
       <div className="container mt-5">

@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Common;
+using OnlineStore.Data;
 using OnlineStore.Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace OnlineStore.Services
 {
     public interface IInvoiceService
     {
-        Task<Result<object>> AddInvoice(BuyProductVm vm);
+        Task<Result<object>> AddInvoiceAsync(BuyProductVm vm);
+
+        Task<Result<IEnumerable<Invoice>>> GetUserInvoicesAsync(string userId, DateTime from, DateTime? to);
     }
 }

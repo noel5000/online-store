@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import store2_pic from "../assets/img/trainers/trainer-1-2.jpg";
 import { Link } from "react-router-dom";
 import { applicationConfig } from "../common/environment.ts";
 import { IProduct } from "../common/model/product.ts";
@@ -10,6 +9,9 @@ import { CartContext } from "../contexts/cartContext.tsx";
 interface ProductProps {
   product: IProduct;
   index: number;
+}
+export const  getProductPicture = function(url): string {
+  return `${applicationConfig.backendUrl}${url}`;
 }
 export default function Product({ product, index }: ProductProps) {
   const { addItem } = useContext(CartContext);
@@ -24,9 +26,6 @@ export default function Product({ product, index }: ProductProps) {
 
   function setToCart() {
     addItem(product);
-  }
-  function getProductPicture(url): string {
-    return `${applicationConfig.backendUrl}${url}`;
   }
   return (
     <>
