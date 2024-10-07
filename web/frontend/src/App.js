@@ -21,6 +21,7 @@ import PaymentSuccess from "./components/paymentSuccess.tsx";
 import Account from "./components/account.tsx";
 import AccountSettings from "./components/account-settings.tsx";
 import UserOrders from "./components/user-orders.tsx";
+import InvoceDetail from "./components/Invoice-detail.tsx";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/product" element={<ProductDetail />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/invoice-details/:orderid" element={<InvoceDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

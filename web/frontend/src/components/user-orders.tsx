@@ -33,6 +33,10 @@ export default function UserOrders(){
     function setFromDates(value:number){
         GetInvoices(value);
     }
+
+    function encodeUrl(data:string){
+     return  data.toString();
+    }
     function GetInvoices(fromOption:number =0){
         setFromDate(fromOption);
         const http = new HttpService<any>('invoice');
@@ -71,7 +75,7 @@ export default function UserOrders(){
                     </div>
                     <div className="col-md-4 text-end order-actions">
                         <button className="btn btn-primary btn-small" onClick={() =>{navigate(`/product/${invoice.product.id}`)}}>Buy again</button>
-                        <button className="btn btn-outline-secondary btn-small" onClick={() =>{navigate(`/invoice-details/${invoice.orderId}`)}}>View order details</button>
+                        <button className="btn btn-outline-secondary btn-small" onClick={() =>{navigate(`/invoice-details/${encodeUrl(invoice.orderId)}`)}}>View order details</button>
                     </div>
                 </div>)
         })}
