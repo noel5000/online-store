@@ -49,7 +49,9 @@ export default function UserOrders(){
 
         <div className="mb-4">
             {fromDates.map((d, index)=>{
-                return (<button className="btn btn-outline-secondary me-2" key={index} onClick={()=>{setFromDates(d.value)}}>{d.name}</button>)
+                return (<button 
+                    className={d.value == fromDate? "btn btn-outline-secondary me-2 selected-btn": "btn btn-outline-secondary me-2"}
+                     key={index} onClick={()=>{setFromDates(d.value)}}>{d.name}</button>)
             })}
             
         </div>
