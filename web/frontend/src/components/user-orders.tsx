@@ -49,7 +49,7 @@ export default function UserOrders(){
     }
 
     return (<>
-     <div className="container my-4">
+     <div className="container my-4"  data-aos="fade-up" data-aos-delay="100">
 
         <div className="mb-4">
             {fromDates.map((d, index)=>{
@@ -62,7 +62,7 @@ export default function UserOrders(){
         {invoices.map((invoice,index)=>{
 
             return (
-                <div className="order-container row" key={index}>
+                <div className="order-container row" key={index}  data-aos="fade-up" data-aos-delay={index * 100}>
                     <div className="col-md-2">
                         <img src={getProductPicture(invoice.product?.pictureUrl)} alt="Product Image" className="order-img" />
                     </div>

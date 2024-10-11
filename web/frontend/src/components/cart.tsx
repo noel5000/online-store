@@ -27,7 +27,7 @@ export default function Cart() {
 
   return (
     <>
-      <div className="container mt-5">
+      <div className="container mt-5" data-aos="fade-up" data-aos-delay="100">
         <h2>Shopping Cart</h2>
         {items.length > 0 ? (
           items.map((item) => {

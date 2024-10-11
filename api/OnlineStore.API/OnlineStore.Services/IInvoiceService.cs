@@ -13,6 +13,10 @@ namespace OnlineStore.Services
     {
         Task<Result<object>> AddInvoiceAsync(BuyProductVm vm);
 
+        Task<Result<InvoiceSupportMessage>> AddSupportMessageAsync(InvoiceSupportMessageVm vm);
+
         Task<Result<IEnumerable<Invoice>>> GetUserInvoicesAsync(string userId, DateTime from, DateTime? to);
+
+        Task<Result<object>> GetOrderDetailsAsync(string userId);
     }
 }

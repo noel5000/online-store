@@ -1,9 +1,9 @@
 import { ICartItem } from "./cart";
 
 export interface User {
-  name: string;
+  firstName: string;
   lastName: string;
-  email: string;
+  username: string;
   permissions: string[] | [];
   address?: string | null;
   language: string | "EN";

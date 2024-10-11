@@ -21,6 +21,7 @@ namespace OnlineStore.Data
 
         public int? SubscriptionId { get; set; }
         public string? AzulResponse { get; set; }
+        public string Status { get; set; } = "Processing";
 
         public string OrderId { get; set; }
 
@@ -32,5 +33,8 @@ namespace OnlineStore.Data
 
         [ForeignKey("SubscriptionId")]
         public virtual Subscription? Subscription { get; set; }
+
+        public virtual IEnumerable<InvoiceSupportMessage> Messages { get; set; }
+
     }
 }

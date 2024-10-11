@@ -9,7 +9,7 @@ export default function PaymentSuccess() {
   };
   return (
     <>
-      <div className="container2 text-center">
+      <div className="container2 text-center" data-aos="fade-up" data-aos-delay="100">
         <i className="bi bi-check-circle-fill checkmark-icon"></i>
         <p className="mt-4 success-message">Payment processed successfully</p>
         <button

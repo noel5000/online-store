@@ -79,8 +79,8 @@ export default function AccountSettings() {
   }
 
   return (
-    <>
-      <main>
+    < >
+      <main  data-aos="fade-up" data-aos-delay="100">
         <div className="py-5 text-center">
           <h2>Account Settings</h2>
         </div>

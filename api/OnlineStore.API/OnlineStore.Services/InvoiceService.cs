@@ -115,6 +115,59 @@ namespace OnlineStore.Services
             return new Result<object>() { Status = 0, Message = "ok", Data = order };
         }
 
+        public async Task<Result<InvoiceSupportMessage>> AddSupportMessageAsync(InvoiceSupportMessageVm vm)
+        {
+            var invoice = await _context.Invoices.AsNoTracking().FirstOrDefaultAsync(x => x.OrderId == vm.OrderId);
+            if (invoice is null)
+                throw new Exception("Invoice not found");
+
+          var data =  await _context.InvoiceSupportMessages.AddAsync(new InvoiceSupportMessage() 
+            {
+            ClientEmail = vm.ClientEmail,
+            ClientName = vm.ClientName,
+            Date = DateTime.UtcNow,
+            InvoiceId = invoice.Id,
+            Message = vm.Message,
+            OrderId = vm.OrderId,
+            Subject = vm.Subject,
+            UserId = vm.UserId,
+            });
+            await _context.SaveChangesAsync();
+
+            return new Result<InvoiceSupportMessage> { Data = data.Entity, Message = "ok" };
+        }
+
+        public async Task<Result<object>> GetOrderDetailsAsync(string orderId)
+        {
+            var invoices = await _context.Invoices.Include(i=>i.Product).AsNoTracking()
+                .Where(x=>x.OrderId == orderId).ToListAsync();
+            return new Result<object> { Status = 0, Data = new 
+            {
+               Items = invoices.Select(i => new 
+               {
+                Product =new Product 
+                {
+                    Id = i.Product.Id,
+                    Name = i.Product.Name,
+                    PictureUrl = i.Product.PictureUrl,
+                    Category = i.Product.Category,
+                    Description = i.Product.Description,
+                    IsSubscriptionBased = i.Product.IsSubscriptionBased,
+                    Price = i.Product.Price,
+                    Quantity = i.Product.Quantity,
+                },
+                i.Amount,
+                i.TotalAmount,
+                i.Quantity,
+                i.Status
+               }),
+                invoices.FirstOrDefault()?.Date,
+                Total = invoices.Sum(x=>x.TotalAmount),
+                Taxes = invoices.Sum(x=>x.Taxes)
+
+            } };
+        }
+
         public async Task<Result<IEnumerable<Invoice>>> GetUserInvoicesAsync(string userId, DateTime from, DateTime? to)
         {
             var toDate = to.HasValue?to.Value: DateTime.Now;

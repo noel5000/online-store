@@ -34,7 +34,7 @@ export default function Register() {
 
   return (
     <>
-      <div className="col-md-11 col-lg-11 mx-3">
+      <div className="col-md-11 col-lg-11 mx-3"  data-aos="fade-up" data-aos-delay="100">
         <h4 className="mb-3">Register Account</h4>
         <form className="needs-validation" onSubmit={handleSubmit(onSubmit)}>
           <div className="row g-3">

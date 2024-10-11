@@ -1,10 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OData.Query;
-using Microsoft.AspNetCore.OData.Routing.Controllers;
-using Microsoft.EntityFrameworkCore;
 using OnlineStore.Common;
+using OnlineStore.Data;
 using OnlineStore.Data.ViewModels;
-using OnlineStore.Database;
 using OnlineStore.Services;
 using OnlineStore.Services.Security;
 
@@ -29,6 +26,22 @@ namespace OnlineStore.API.Controllers
             {
                 // validar que el mail del usuario en sesion sea el mismo que el del cuerpo
                 return Ok(await _invoiceService.AddInvoiceAsync(vm));
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { status = -1, message = ex.Message });
+            }
+        }
+
+        [HttpPost("AddSupportMessage")]
+        [CustomAuthorize(["user"])]
+        public async Task<IActionResult> AddSupportMessageAsync([FromBody] InvoiceSupportMessageVm vm)
+        {
+            try
+            {
+                vm.UserId = HttpContext.Request.GetUserId();
+                // validar que el mail del usuario en sesion sea el mismo que el del cuerpo
+                return Ok(await _invoiceService.AddSupportMessageAsync(vm));
             }
             catch (Exception ex)
             {
@@ -63,6 +76,25 @@ namespace OnlineStore.API.Controllers
                 var invoices = await _invoiceService.GetUserInvoicesAsync(userId, new DateTime(fromDate.Year, fromDate.Month, fromDate.Day), option == OrderHistoryOptions.PreviousYear ?
                     new DateTime(DateTime.Now.Year-1, 12, 31) : null);
                 return Ok (invoices);
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { status = -1, message = ex.Message });
+            }
+        }
+
+
+
+        [HttpGet("GetInvoiceDetails/{orderId}")]
+        [CustomAuthorize(["user"])]
+        public async Task<IActionResult> GetInvoiceDetailsAsync(string orderId)
+        {
+            try
+            {
+                var data = await _invoiceService.GetOrderDetailsAsync(orderId);
+                if (data is null)
+                    throw new Exception("Order Id is not valid");
+                return Ok( data!);
             }
             catch (Exception ex)
             {
