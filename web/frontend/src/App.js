@@ -22,10 +22,24 @@ import Account from "./components/account.tsx";
 import AccountSettings from "./components/account-settings.tsx";
 import UserOrders from "./components/user-orders.tsx";
 import InvoceDetail from "./components/Invoice-detail.tsx";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <CartProvider>
+      <ToastContainer 
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      transition={Bounce}/>
       <Router>
         <MainMenu></MainMenu>
         <Routes>

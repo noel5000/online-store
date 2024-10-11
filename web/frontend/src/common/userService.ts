@@ -1,5 +1,6 @@
 import { CacheService } from "./cacheService.ts";
 import { HttpService } from "./httpService.ts";
+import { MessagesService } from "./messages.ts";
 import { IRegisterUser, LoginInfo, User } from "./model/user.ts";
 
 export const userKey = "UserSystem$jnll23949@##%";
@@ -31,21 +32,29 @@ export class UserService {
 
   login(login: LoginInfo, from: string | null) {
     this.http.Post(login, "login").then((r) => {
-      if (r.status < 0) alert(r.message);
+      if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
       else {
         this.addUser(r.data as User);
         window.location.href = `${from ? "/" + from : "/"}`;
       }
+    })
+    .catch(e=>{
+      console.log(e);
+      new MessagesService().sendErrorMessage('Network error....');
     });
   }
 
   createUser(user: IRegisterUser, redirect?: string) {
     this.http.Post(user, "createuser").then((r) => {
-      if (r.status < 0) alert(r.message);
+      if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
       else {
         this.addUser(r.data as User);
         window.location.href = redirect ? `/${redirect}` : "/";
       }
-    });
+    })
+    .catch(e=>{
+      console.log(e);
+      new MessagesService().sendErrorMessage('Network error....');
+    });;
   }
 }

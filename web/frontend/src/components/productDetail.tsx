@@ -7,6 +7,7 @@ import { HttpService } from "../common/httpService.ts";
 import { applicationConfig } from "../common/environment.ts";
 import { CartContext } from "../contexts/cartContext.tsx";
 import { useParams } from "react-router-dom";
+import { MessagesService } from "../common/messages.ts";
 
 export default function ProductDetail() {
   const {id} = useParams();
@@ -25,7 +26,7 @@ export default function ProductDetail() {
   function setToCart() {
     if (product) {
       addItem(product);
-      alert("Item added to the cart successfully");
+      new MessagesService().sendAlertMessage("Item added to the cart successfully");
     }
   }
   const getProduct = function () {
@@ -34,15 +35,15 @@ export default function ProductDetail() {
       const apiResult = api
         .Get(id? id : '')
         .then((r) => {
-          if (r.status < 0) alert(r.message);
+          if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
           setProduct(r.data);
         })
         .catch((e) => {
-          alert("An error happended processing your request");
+          new MessagesService().sendErrorMessage("An error happended processing your request");
           console.log(e);
         });
     } catch {
-      alert("An error happended processing your request");
+      new MessagesService().sendErrorMessage("An error happended processing your request");
     }
   };
   function getProductPicture(url): string {

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { HttpService } from '../common/httpService.ts';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { UserService } from '../common/userService.ts';
+import { MessagesService } from '../common/messages.ts';
 
 const style ={
     border: '0',
@@ -49,11 +50,11 @@ export default function InvoceDetail(){
         promise
         .then(r=>{
           if (r.status <0)
-              alert(r.message);
+            new MessagesService().sendErrorMessage(r.message);
           setInvoice(r.data);
         })
       .catch(e=> {
-          alert('an error happened while retreiving the information');
+        new MessagesService().sendErrorMessage('an error happened while retreiving the information');
           console.log(e);
         })
       }
@@ -82,12 +83,12 @@ export default function InvoceDetail(){
        const response = http.Post(data, "AddSupportMessage");
        response.then(r=>{
         if(r.status< 0)
-          alert(r.message);
+          new MessagesService().sendErrorMessage(r.message);
         else
-        alert('Your message has been sent. Someone from customer support service will contact you as soon as possible');
+        new MessagesService().sendAlertMessage('Your message has been sent. Someone from customer support service will contact you as soon as possible');
        })
        .catch(e=>{
-        alert('An error happened while sending your message. Please try again later');
+        new MessagesService().sendErrorMessage('An error happened while sending your message. Please try again later');
         console.log(e);
        })
       };

@@ -7,6 +7,7 @@ import { HttpService } from "../common/httpService.ts";
 import Product from "./product.tsx";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { IProduct } from "../common/model/product.ts";
+import { MessagesService } from "../common/messages.ts";
 
 export default function Store() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -59,7 +60,11 @@ export default function Store() {
       setProducts((prevProducts) => [...prevProducts, ...r.value]);
       const newPage = page + 1;
       setPage(newPage);
-    });
+    })
+    .catch(e=>{
+      console.log(e);
+      new MessagesService().sendErrorMessage('Network error....');
+    });;
   }
 
   return (

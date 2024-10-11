@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ICheckout, IRegisterUser } from "../common/model/user.ts";
 import { states } from "../common/model/localizationData.ts";
 import { HttpService } from "../common/httpService.ts";
+import { MessagesService } from "../common/messages.ts";
 
 export default function AccountSettings() {
   const navigator = useNavigate();
@@ -29,13 +30,16 @@ export default function AccountSettings() {
       .Put(data, "UpdateUser")
 
       .then((r) => {
-        if (r.status < 0) alert(r.message);
+        if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
         else {
-          alert('Information updated successfully');
+          new MessagesService().sendAlertMessage('Information updated successfully');
           navigator("/account");
         }
       })
-      .catch((e) => console.log(e));
+      .catch(e=>{
+        console.log(e);
+        new MessagesService().sendErrorMessage('Network error....');
+      });
   }
 
   function fetchUserData() {
@@ -43,7 +47,7 @@ export default function AccountSettings() {
       userService
         .GetGeneric<IRegisterUser>(`GetUserInfo`)
         .then((r) => {
-          if (r.status < 0) alert(r.message);
+          if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
           const userData = r.data;
           setValue("firstName", userData.firstName || "");
           setValue("lastName", userData.lastName || "");
@@ -56,7 +60,10 @@ export default function AccountSettings() {
           setValue("state", userData.state || "");
           setValue("shippingIsBilling", userData.shippingIsBilling || false);
         })
-        .catch((e) => console.log(e));
+        .catch(e=>{
+          console.log(e);
+          new MessagesService().sendErrorMessage('Network error....');
+        });
   }
 
   const userService = new HttpService<IRegisterUser>("auth");

@@ -4,6 +4,7 @@ import '../assets/css/orders.css';
 import { HttpService } from "../common/httpService.ts";
 import { getProductPicture } from "./product.tsx";
 import { useNavigate } from "react-router-dom";
+import { MessagesService } from "../common/messages.ts";
 
 export const formatDate = function(date:Date):string{
     return date.toString().split('T')[0];
@@ -42,10 +43,14 @@ export default function UserOrders(){
         const http = new HttpService<any>('invoice');
         http.GetAll(`GetUserHistory/${fromOption}`).then(r=>{
             if(r.status<0)
-                alert(r.message)
+                new MessagesService().sendErrorMessage(r.message)
             else
                 setInvoices(r.data);
         })
+        .catch(e=>{
+          console.log(e);
+          new MessagesService().sendErrorMessage('Network error....');
+        });
     }
 
     return (<>

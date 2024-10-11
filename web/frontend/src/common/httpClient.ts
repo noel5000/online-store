@@ -1,8 +1,10 @@
 // httpClient.ts
 import axios from "axios";
 import { applicationConfig } from "./environment.ts";
+import { MessagesService } from "./messages.ts";
 
 let activeRequests = 0;
+const messages = new MessagesService();
 // Create an Axios instance
 const axiosInstance = axios.create({
   baseURL: applicationConfig.backendUrl, // Replace with your API base URL
@@ -53,18 +55,33 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       activeRequests--;
       if (activeRequests === 0) {
-        //loadingService.setLoading(false);
+        let loading = document.getElementById("loadingDiv");
+      if (loading) {
+        loading.hidden = true;
+      }
       }
       const { status, data } = error.response;
       if (status === 401 || status === 403) {
         window.location.href = "/login"; // Redirect on unauthorized access
+        let loading = document.getElementById("loadingDiv");
+        if (loading) {
+          loading.hidden = true;
+        }
       } else {
         // Display an alert for other errors
-        alert(`Error ${status}: ${data.message || error.message}`);
+        let loading = document.getElementById("loadingDiv");
+        if (loading) {
+          loading.hidden = true;
+        }
+        messages.sendErrorMessage(`Error ${status}: ${data.message || error.message}`);
       }
     } else {
       // Handle network or unexpected errors
-      alert(`Network Error: ${error.message}`);
+      let loading = document.getElementById("loadingDiv");
+      if (loading) {
+        loading.hidden = true;
+      }
+      messages.sendErrorMessage(`Network Error: ${error.message}`);
     }
     return Promise.reject(error);
   }
