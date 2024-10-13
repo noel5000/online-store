@@ -16,6 +16,8 @@ namespace OnlineStore.Data
         public decimal Price { get; set; }
         public bool IsSubscriptionBased { get; set; }
         public int Quantity { get; set; } = 0;
+        public string? JsonMetadata { get; set; }
+        public string? ServiceComponentUrl { get; set; }
 
         public virtual ICollection<Subscription> Subscriptions { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
