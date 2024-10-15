@@ -15,6 +15,7 @@ namespace OnlineStore.Database
         public virtual DbSet<SubscriptionPayment> SubscriptionPayments { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<InvoiceSupportMessage> InvoiceSupportMessages { get; set; }
+        public virtual DbSet<CustomerSupportMessage> CustomerSupportMessages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -31,6 +32,11 @@ namespace OnlineStore.Database
                 .HasOne(s=>s.Product)
                 .WithMany(p=>p.Subscriptions)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CustomerSupportMessage>()
+                .HasOne(s => s.User)
+                .WithMany(p => p.Messages)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<InvoiceSupportMessage>()
                 .HasOne(s => s.Invoice)

@@ -3,6 +3,11 @@ import React,{ useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import PageFooter from './pageFooting.tsx';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { IOrderContact } from './Invoice-detail.tsx';
+import { MessagesService } from '../common/messages.ts';
+import { HttpService } from '../common/httpService.ts';
+import { UserService } from '../common/userService.ts';
 
 const style ={
     border: '0',
@@ -19,7 +24,39 @@ export default function ContactPage(){
           once: true,
           mirror: false
         });
+        fetchData();
       }, []);
+
+      function fetchData() {
+        const userService = new UserService()
+        if (userService.isUserLoggedIn()){
+          const userData = userService.getUser();
+          setValue("clientName", `${userData.firstName} ${userData.lastName}` || "");
+          setValue("clientEmail", userData.username || "");
+        }
+         
+      }
+      const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors }
+      } = useForm<IOrderContact>();
+    
+      const onSubmit: SubmitHandler<IOrderContact> = (data) => {
+       const http = new HttpService<any>('customerMessage');
+       const response = http.Post(data, "");
+       response.then(r=>{
+        if(r.status< 0)
+          new MessagesService().sendErrorMessage(r.message);
+        else
+        new MessagesService().sendAlertMessage('Your message has been sent. Someone from customer support service will contact you as soon as possible');
+       })
+       .catch(e=>{
+        new MessagesService().sendErrorMessage('An error happened while sending your message. Please try again later');
+        console.log(e);
+       })
+      };
     return (<>
         
     <section id="contact" className="contact section">
@@ -61,23 +98,54 @@ export default function ContactPage(){
           </div>
 
           <div className="col-lg-8">
-            <form className="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form className="php-email-form" data-aos="fade-up" data-aos-delay="200" 
+            onSubmit={handleSubmit(onSubmit)}>
               <div className="row gy-4">
 
                 <div className="col-md-6">
-                  <input type="text" name="name" className="form-control" placeholder="Your Name" required={false} />
+                  <input type="text" className="form-control" placeholder="Your Name"
+                    {...register("clientName", {
+                      required: "The name is required",
+                      maxLength: 50,
+                      minLength: 3
+                    })} />
+                    <div className="invalid-feedback">
+                      {errors && errors.clientName ? errors.clientName.message : ""}
+                    </div>
                 </div>
 
                 <div className="col-md-6 ">
-                  <input type="email" className="form-control" name="email" placeholder="Your Email" required={false} />
+                  <input type="email" className="form-control"placeholder="Your Email" {...register("clientEmail", {
+                    required: "The email is required",
+                    maxLength: 50,
+                    minLength: 3
+                  })}  />
+                     <div className="invalid-feedback">
+                       {errors && errors.clientEmail ? errors.clientEmail.message : ""}
+                     </div>
                 </div>
 
                 <div className="col-md-12">
-                  <input type="text" className="form-control" name="subject" placeholder="Subject" required={false}/>
+                  <input type="text" className="form-control"placeholder="Subject" {...register("subject", {
+                    required: "The subject is required",
+                    maxLength: 200,
+                    minLength: 3
+                  })}/>
+                     <div className="invalid-feedback">
+                       {errors && errors.subject ? errors.subject.message : ""}
+                     </div>
                 </div>
 
                 <div className="col-md-12">
-                  <textarea className="form-control" name="message" rows={6} placeholder="Message" required={false}></textarea>
+                  <textarea className="form-control" rows={6} placeholder="Message" {...register("message", {
+                    required: "The message is required",
+                    maxLength: 500,
+                    minLength: 3
+                  })}>
+                     </textarea>
+                     <div className="invalid-feedback">
+                       {errors && errors.message ? errors.message.message : ""}
+                     </div>
                 </div>
 
                 <div className="col-md-12 text-center">

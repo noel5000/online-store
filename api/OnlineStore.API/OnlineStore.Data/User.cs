@@ -18,6 +18,7 @@ namespace OnlineStore.Data
         public string? LastName { get; set; }
 
         public virtual ICollection<Subscription> Subscriptions { get; set; } = [];
+        public virtual ICollection<CustomerSupportMessage> Messages { get; set; } = [];
         public virtual ICollection<Invoice> Invoices { get; set; } = [];
         public bool ShippingIsBilling { get; set; }
         [MaxLength(10)]
