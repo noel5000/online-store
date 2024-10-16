@@ -12,7 +12,7 @@ import { MessagesService } from "../common/messages.ts";
 export default function Store() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [page, setPage] = useState<number>(0);
-  const [size, setSize] = useState<number>(3);
+  const [size, setSize] = useState<number>(6);
   const [count, setCount] = useState<number>(0);
   const [apiCallsCount, setApiCallsCount] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
