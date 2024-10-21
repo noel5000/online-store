@@ -1,3 +1,3 @@
 export const applicationConfig= {
-    backendUrl:'https://localhost:44311/'
+    backendUrl:'http://localhost:5182/'
     }
