@@ -7,6 +7,13 @@ export default function PaymentSuccess() {
   const redirect = function () {
     navigate("/");
   };
+
+  useEffect(()=>{
+    let loading = document.getElementById("loadingDiv");
+      if (loading) {
+        loading.hidden = true;
+      }
+  },[]);
   return (
     <>
       <div className="container2 text-center" data-aos="fade-up" data-aos-delay="100">
