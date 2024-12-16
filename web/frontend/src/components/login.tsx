@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginInfo } from "../common/model/user";
 import { UserService } from "../common/userService.ts";
 
-const style = {
-  border: "0",
-  width: "100%",
-  height: "300px"
-};
+
 
 export default function Login() {
+  
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
   function registerUser() {
     const fromParam = searchParams.get("from");
     navigate(fromParam ? `/register?from=${fromParam}` : "/register");

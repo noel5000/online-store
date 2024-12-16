@@ -30,7 +30,8 @@ export default function AccountSettings() {
       .Put(data, "UpdateUser")
 
       .then((r) => {
-        if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
+        if (r.status < 0) 
+          new MessagesService().sendErrorMessage(r.message);
         else {
           new MessagesService().sendAlertMessage('Information updated successfully');
           navigator("/account");
@@ -47,18 +48,20 @@ export default function AccountSettings() {
       userService
         .GetGeneric<IRegisterUser>(`GetUserInfo`)
         .then((r) => {
-          if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
+          if (r.status < 0) 
+            new MessagesService().sendErrorMessage(r.message);
+
           const userData = r.data;
-          setValue("firstName", userData.firstName || "");
-          setValue("lastName", userData.lastName || "");
-          setValue("address", userData.address || "");
-          setValue("address2", userData.address2 || "");
-          setValue("zipCode", userData.zipCode || "");
-          setValue("email", userData.email || "");
-          setValue("country", userData.country || "US");
-          setValue("phoneNumber", userData.phoneNumber || "");
-          setValue("state", userData.state || "");
-          setValue("shippingIsBilling", userData.shippingIsBilling || false);
+          setValue("firstName", userData?.firstName || "");
+          setValue("lastName", userData?.lastName || "");
+          setValue("address", userData?.address || "");
+          setValue("address2", userData?.address2 || "");
+          setValue("zipCode", userData?.zipCode || "");
+          setValue("email", userData?.email || "");
+          setValue("country", userData?.country || "US");
+          setValue("phoneNumber", userData?.phoneNumber || "");
+          setValue("state", userData?.state || "");
+          setValue("shippingIsBilling", userData?.shippingIsBilling || false);
         })
         .catch(e=>{
           console.log(e);
