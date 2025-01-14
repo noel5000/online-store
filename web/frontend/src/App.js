@@ -24,9 +24,11 @@ import UserOrders from "./components/user-orders.tsx";
 import InvoceDetail from "./components/Invoice-detail.tsx";
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserProvider } from "./contexts/userContext.tsx";
 
 function App() {
   return (
+    <UserProvider>
     <CartProvider>
       <ToastContainer 
       position="top-right"
@@ -61,6 +63,7 @@ function App() {
         </Routes>
       </Router>
     </CartProvider>
+    </UserProvider>
   );
 }
 

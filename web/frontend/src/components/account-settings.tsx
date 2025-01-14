@@ -5,15 +5,16 @@ import { CartContext } from "../contexts/cartContext.tsx";
 import "../assets/css/cart.css";
 import { applicationConfig } from "../common/environment.ts";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { UserService } from "../common/userService.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ICheckout, IRegisterUser } from "../common/model/user.ts";
 import { states } from "../common/model/localizationData.ts";
 import { HttpService } from "../common/httpService.ts";
 import { MessagesService } from "../common/messages.ts";
+import { UserContext } from "../contexts/userContext.tsx";
 
 export default function AccountSettings() {
   const navigator = useNavigate();
+  const {isUserLoggedIn, } = useContext(UserContext);
   const hasFetched = useRef(false);
   useEffect(() => {
     validateUser();
@@ -44,7 +45,7 @@ export default function AccountSettings() {
   }
 
   function fetchUserData() {
-    if (new UserService().isUserLoggedIn())
+    if (isUserLoggedIn())
       userService
         .GetGeneric<IRegisterUser>(`GetUserInfo`)
         .then((r) => {
@@ -82,8 +83,7 @@ export default function AccountSettings() {
   };
 
   function validateUser() {
-    const userService = new UserService();
-    if (!userService.isUserLoggedIn()) {
+    if (!isUserLoggedIn()) {
       navigator(`/login?from=checkout`);
     }
   }

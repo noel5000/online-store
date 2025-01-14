@@ -30,31 +30,36 @@ export class UserService {
     return user?.authToken;
   }
 
-  login(login: LoginInfo, from: string | null) {
-    this.http.Post(login, "login").then((r) => {
-      if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
+  async login(login: LoginInfo, from: string | null): Promise<void> {
+    try{
+      const r = await this.http.Post(login, "login");
+      if (r.status < 0) 
+        new MessagesService().sendErrorMessage(r.message);
       else {
         this.addUser(r.data as User);
         window.location.href = `${from ? "/" + from : "/"}`;
       }
-    })
-    .catch(e=>{
-      console.log(e);
+    }
+    catch(e){ 
+       console.log(e);
       new MessagesService().sendErrorMessage('Network error....');
-    });
+    }
   }
 
-  createUser(user: IRegisterUser, redirect?: string) {
-    this.http.Post(user, "createuser").then((r) => {
-      if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
+  async createUser(user: IRegisterUser, redirect?: string) {
+
+    try{
+      const r = await this.http.Post(user, "createuser");
+      if (r.status < 0) 
+        new MessagesService().sendErrorMessage(r.message);
       else {
         this.addUser(r.data as User);
-        window.location.href = redirect ? `/${redirect}` : "/";
+        window.location.href = `${redirect ? "/" + redirect : "/"}`;
       }
-    })
-    .catch(e=>{
-      console.log(e);
+    }
+    catch(e){ 
+       console.log(e);
       new MessagesService().sendErrorMessage('Network error....');
-    });;
+    }
   }
 }

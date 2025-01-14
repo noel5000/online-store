@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginInfo } from "../common/model/user";
-import { UserService } from "../common/userService.ts";
+import { UserContext } from "../contexts/userContext.tsx";
 
 
 
@@ -12,7 +12,7 @@ export default function Login() {
   
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-
+  const {login} = useContext(UserContext);
   function registerUser() {
     const fromParam = searchParams.get("from");
     navigate(fromParam ? `/register?from=${fromParam}` : "/register");
@@ -26,8 +26,7 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<LoginInfo> = (data) => {
     const from = searchParams.get("from");
-    const userService = new UserService();
-    userService.login(data, from);
+    login(data, from);
   };
   useEffect(() => {
     AOS.init({

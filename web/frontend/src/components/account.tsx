@@ -3,17 +3,17 @@ import "../assets/css/account.css";
 import { redirect, useNavigate } from "react-router-dom";
 import settings_icon from "../assets/img/settings-cog-svgrepo-com.svg";
 import invoice_icon from "../assets/img/invoice-svgrepo-com.svg";
-import { UserService } from "../common/userService.ts";
+import { UserContext } from "../contexts/userContext.tsx";
 
 export default function Account() {
   const navigate = useNavigate();
+  const {isUserLoggedIn} = useContext(UserContext);
   const redirect = function (url: string) {
     navigate(`/${url}`);
   };
 
   useEffect(() => {
-    const userService = new UserService();
-    if (!userService.isUserLoggedIn()) {
+    if (!isUserLoggedIn()) {
       const loading = document.getElementById("loadingDiv");
       if (loading) {
         loading.hidden = true;

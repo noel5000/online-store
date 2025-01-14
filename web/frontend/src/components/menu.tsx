@@ -12,10 +12,10 @@ import {
 import { useContext, useEffect } from "react";
 import React from "react";
 import { CartContext } from "../contexts/cartContext.tsx";
-import { UserService } from "../common/userService.ts";
+import { UserContext } from "../contexts/userContext.tsx";
 
 function MainMenu() {
-  const userService = new UserService();
+  const {isUserLoggedIn, logout} = useContext(UserContext);
   const { items } = useContext(CartContext);
   const totalItems = items.reduce((total, item) => total + item.quantity, 0);
   const location = useLocation();
@@ -34,8 +34,7 @@ function MainMenu() {
 
   function renderMenu() {
     const logout = function () {
-      const userService = new UserService();
-      userService.logout();
+     logout();
     };
     return (
       <>
@@ -65,7 +64,7 @@ function MainMenu() {
                   <Link
                     to={"#"}
                     onClick={logout}
-                    hidden={!userService.isUserLoggedIn()}
+                    hidden={!isUserLoggedIn()}
                   >
                     Logout
                   </Link>
@@ -82,14 +81,14 @@ function MainMenu() {
               </div>
             </Link>
             <Link
-              hidden={userService.isUserLoggedIn()}
+              hidden={isUserLoggedIn()}
               to="/login"
               className="btn-getstarted"
             >
               Login
             </Link>
             <Link
-              hidden={!userService.isUserLoggedIn()}
+              hidden={!isUserLoggedIn()}
               to="/account"
               className="btn-getstarted"
             >

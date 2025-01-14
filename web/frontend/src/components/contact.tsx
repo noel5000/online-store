@@ -1,5 +1,5 @@
 
-import React,{ useEffect } from 'react';
+import React,{ useContext, useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import PageFooter from './pageFooting.tsx';
@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IOrderContact } from './Invoice-detail.tsx';
 import { MessagesService } from '../common/messages.ts';
 import { HttpService } from '../common/httpService.ts';
-import { UserService } from '../common/userService.ts';
+import { UserContext } from '../contexts/userContext.tsx';
 
 const style ={
     border: '0',
@@ -16,7 +16,7 @@ const style ={
 }
 
 export default function ContactPage(){
-
+  const {isUserLoggedIn, getUser} = useContext(UserContext);
     useEffect(() => {
         AOS.init({
           duration: 600,
@@ -28,11 +28,10 @@ export default function ContactPage(){
       }, []);
 
       function fetchData() {
-        const userService = new UserService()
-        if (userService.isUserLoggedIn()){
-          const userData = userService.getUser();
-          setValue("clientName", `${userData.firstName} ${userData.lastName}` || "");
-          setValue("clientEmail", userData.username || "");
+        if (isUserLoggedIn()){
+          const userData = getUser();
+          setValue("clientName", `${userData?.firstName} ${userData?.lastName}` || "");
+          setValue("clientEmail", userData?.username || "");
         }
          
       }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link, useSearchParams } from "react-router-dom";
@@ -6,11 +6,11 @@ import ReactDOM from "react-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IRegisterUser } from "../common/model/user";
 import { states } from "../common/model/localizationData.ts";
-import { HttpService } from "../common/httpService.ts";
-import { UserService } from "../common/userService.ts";
+import { UserContext } from "../contexts/userContext.tsx";
 
 export default function Register() {
   const [searchParams] = useSearchParams();
+  const {createUser} = useContext(UserContext);
   useEffect(() => {
     AOS.init({
       duration: 600,
@@ -19,7 +19,6 @@ export default function Register() {
       mirror: false,
     });
   }, []);
-  const userService = new UserService();
 
   const {
     register,
@@ -29,7 +28,7 @@ export default function Register() {
 
   const onSubmit: SubmitHandler<IRegisterUser> = (data) => {
     const from = searchParams.get("from");
-    userService.createUser(data, from ? from : "");
+    createUser(data, from ? from : "");
   };
 
   return (

@@ -1,13 +1,13 @@
 
-import React,{ useEffect, useState } from 'react';
+import React,{ useContext, useEffect, useState } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import PageFooter from './pageFooting.tsx';
 import { useParams } from 'react-router-dom';
 import { HttpService } from '../common/httpService.ts';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { UserService } from '../common/userService.ts';
 import { MessagesService } from '../common/messages.ts';
+import { UserContext } from '../contexts/userContext.tsx';
 
 const style ={
     border: '0',
@@ -32,6 +32,7 @@ export interface IInvoiceDetails{
 
 export default function InvoceDetail(){
     const {orderid} = useParams();
+    const {isUserLoggedIn, getUser} = useContext(UserContext);
     const [invoice, setInvoice] = useState<any>({items:[], date: '', total: 0})
     useEffect(() => {
         AOS.init({
@@ -60,11 +61,10 @@ export default function InvoceDetail(){
       }
       
   function fetchData() {
-    const userService = new UserService()
-    if (userService.isUserLoggedIn()){
-      const userData = userService.getUser();
-      setValue("clientName", `${userData.firstName} ${userData.lastName}` || "");
-      setValue("clientEmail", userData.username || "");
+    if (isUserLoggedIn()){
+      const userData = getUser();
+      setValue("clientName", `${userData?.firstName} ${userData?.lastName}` || "");
+      setValue("clientEmail", userData?.username || "");
       setValue("subject", `Question about order: ${orderid}`);
       setValue("message", "");
       setValue("orderId", orderid!.toString());
