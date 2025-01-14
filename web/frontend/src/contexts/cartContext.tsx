@@ -22,7 +22,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   if (
     items &&
     items.length > 0 &&
-    items.findIndex((x) => x.quantity <= 0) == -1
+    items.findIndex((x) => x.quantity <= 0) <0
   ) {
     cacheService.addData(items, cartKey);
   }
