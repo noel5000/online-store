@@ -33,9 +33,6 @@ function MainMenu() {
   }
 
   function renderMenu() {
-    const logout = function () {
-     logout();
-    };
     return (
       <>
         <header
