@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginInfo } from "../common/model/user";
 import { UserContext } from "../contexts/userContext.tsx";
+import Input from "./common/input.tsx";
 
 
 
@@ -50,45 +51,35 @@ export default function Login() {
               >
                 <div className="row gy-4">
                   <div className="col-md-12 ">
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="Your Email"
-                      {...register("email", {
-                        required: "The email is required",
-                        maxLength: 50,
-                        minLength: 3,
-                        pattern: {
-                          value:
-                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                          message: "A valid email is required."
-                        }
-                      })}
-                    />
-                    <div className="invalid-feedback">
-                      {errors && errors.email ? errors.email.message : ""}
-                    </div>
+              <Input 
+              label="Your Email"
+               inputName="email"
+                type="email" 
+                register={register("email", {
+                  required: "The email is required",
+                  maxLength: 50,
+                  minLength: 3,
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "A valid email is required.",
+                  },
+                })}
+                errors={errors}
+                 />
                   </div>
 
                   <div className="col-12">
-                    <label htmlFor="password" className="form-label">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="password"
-                      placeholder="Password"
-                      {...register("password", {
-                        required: "Password is required",
-                        maxLength: 100,
-                        minLength: 5
-                      })}
-                    />
-
-                    <div className="invalid-feedback">
-                      {errors && errors.password ? errors.password.message : ""}
-                    </div>
+              <Input 
+              label="Password"
+               inputName="password"
+                type="password" 
+                register={register("password", {
+                  required: "Password is required",
+                  maxLength: 100,
+                  minLength: 5,
+                })}
+                errors={errors}
+                 />
                   </div>
 
                   <div className="col-md-12 text-center">

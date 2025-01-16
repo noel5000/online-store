@@ -8,6 +8,8 @@ import { IOrderContact } from './Invoice-detail.tsx';
 import { MessagesService } from '../common/messages.ts';
 import { HttpService } from '../common/httpService.ts';
 import { UserContext } from '../contexts/userContext.tsx';
+import Input from './common/input.tsx';
+import TextArea from './common/textArea.tsx';
 
 const style ={
     border: '0',
@@ -102,49 +104,62 @@ export default function ContactPage(){
               <div className="row gy-4">
 
                 <div className="col-md-6">
-                  <input type="text" className="form-control" placeholder="Your Name"
-                    {...register("clientName", {
-                      required: "The name is required",
-                      maxLength: 50,
-                      minLength: 3
-                    })} />
-                    <div className="invalid-feedback">
-                      {errors && errors.clientName ? errors.clientName.message : ""}
-                    </div>
+              <Input 
+              label=""
+              placeholder='Your name'
+               inputName="clientName"
+                type="text" 
+                register={register("clientName", {
+                  required: "The name is required",
+                  maxLength: 50,
+                  minLength: 3
+                })}
+                errors={errors}
+                 />
                 </div>
 
                 <div className="col-md-6 ">
-                  <input type="email" className="form-control"placeholder="Your Email" {...register("clientEmail", {
-                    required: "The email is required",
-                    maxLength: 50,
-                    minLength: 3
-                  })}  />
-                     <div className="invalid-feedback">
-                       {errors && errors.clientEmail ? errors.clientEmail.message : ""}
-                     </div>
+              <Input 
+              label=""
+               inputName="clientEmail"
+               placeholder='Your email'
+                type="email" 
+                register={register("clientEmail", {
+                  required: "The email is required",
+                  maxLength: 50,
+                  minLength: 3
+                })}
+                errors={errors}
+                 />
                 </div>
 
                 <div className="col-md-12">
-                  <input type="text" className="form-control"placeholder="Subject" {...register("subject", {
-                    required: "The subject is required",
-                    maxLength: 200,
-                    minLength: 3
-                  })}/>
-                     <div className="invalid-feedback">
-                       {errors && errors.subject ? errors.subject.message : ""}
-                     </div>
+              <Input 
+              label=""
+              placeholder='Subject'
+               inputName="subject"
+                type="text" 
+                register={register("subject", {
+                  required: "The subject is required",
+                  maxLength: 200,
+                  minLength: 3
+                })}
+                errors={errors}
+                 />
                 </div>
 
                 <div className="col-md-12">
-                  <textarea className="form-control" rows={6} placeholder="Message" {...register("message", {
-                    required: "The message is required",
-                    maxLength: 500,
-                    minLength: 3
-                  })}>
-                     </textarea>
-                     <div className="invalid-feedback">
-                       {errors && errors.message ? errors.message.message : ""}
-                     </div>
+              <TextArea 
+              label=""
+              placeholder='Your message'
+               inputName="message"
+                register={register("message", {
+                  required: "The message is required",
+                  maxLength: 500,
+                  minLength: 3
+                })}
+                errors={errors}
+                 />
                 </div>
 
                 <div className="col-md-12 text-center">
