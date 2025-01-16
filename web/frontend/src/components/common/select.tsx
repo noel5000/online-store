@@ -14,7 +14,6 @@ export interface ISelect {
 }
 const Select : React.FC<ISelect> = ({data, dataLabel, dataId, label, inputName, register, errors}) =>{
 
-    useEffect(()=>{},[data])
     return <>
        <label htmlFor={inputName} className="form-label">
                 {label ?? ""}

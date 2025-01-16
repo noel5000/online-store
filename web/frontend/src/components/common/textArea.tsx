@@ -14,7 +14,7 @@ export interface ITextArea {
 }
 const TextArea : React.FC<ITextArea> = ({label, inputName, register, errors, rows, placeholder}) =>{
 
-  useEffect(()=>{},[errors, label]);
+
     return <>
       { label && <label htmlFor={inputName} className="form-label">
                 {label ?? ""}

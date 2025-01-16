@@ -13,7 +13,7 @@ export interface IInput {
 }
 const Input : React.FC<IInput> = ({type, label, inputName, register, errors, placeholder}) =>{
 
-useEffect(()=>{},[errors, label]);
+
 
     return <>
       { label && <label htmlFor={inputName} className="form-label">
