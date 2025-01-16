@@ -98,6 +98,5 @@ export default function Subscription(){
       </div>
 
     </section>
-    <PageFooter />
     </>);
 }

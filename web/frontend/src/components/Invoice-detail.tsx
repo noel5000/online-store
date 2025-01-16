@@ -104,6 +104,5 @@ export default function InvoceDetail(){
       </div>
 
     </section>
-    <PageFooter />
     </>);
 }

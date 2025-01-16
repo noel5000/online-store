@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PageFooter() {
+const PageFooter =() =>{
   return (
     <>
       <footer id="footer" className="footer position-relative light-background">
@@ -117,3 +117,5 @@ export default function PageFooter() {
     </>
   );
 }
+
+export default PageFooter;

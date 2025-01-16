@@ -41,6 +41,5 @@ export default function ContactPage(){
       <ContactUs />
 
     </section>
-    <PageFooter />
     </>);
 }

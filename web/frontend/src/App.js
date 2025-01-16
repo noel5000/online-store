@@ -25,6 +25,7 @@ import InvoceDetail from "./components/Invoice-detail.tsx";
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from "./contexts/userContext.tsx";
+import PageFooter from "./components/pageFooting.tsx";
 
 function App() {
   return (
@@ -61,7 +62,10 @@ function App() {
           <Route path="/account-settings" element={<AccountSettings />} />
           <Route path="/user-orders" element={<UserOrders />} />
         </Routes>
+        <PageFooter />
       </Router>
+
+
     </CartProvider>
     </UserProvider>
   );

@@ -100,7 +100,6 @@ export default function Store() {
           </section>
         </InfiniteScroll>
       </main>
-      <PageFooter />
     </>
   );
 }
