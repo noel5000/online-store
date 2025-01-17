@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import {FieldErrors, UseFormRegisterReturn} from 'react-hook-form';
 
 export interface IInput {

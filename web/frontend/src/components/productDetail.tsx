@@ -29,21 +29,17 @@ export default function ProductDetail() {
       new MessagesService().sendAlertMessage("Item added to the cart successfully");
     }
   }
-  const getProduct = function () {
+  const getProduct =async function () {
     const api = new HttpService<IProduct>("product");
     try {
-      const apiResult = api
-        .Get(id? id : '')
-        .then((r) => {
-          if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
-          setProduct(r.data);
-        })
-        .catch((e) => {
-          new MessagesService().sendErrorMessage("An error happended processing your request");
-          console.log(e);
-        });
-    } catch {
+      const apiResult = await api.Get(id? id : '');
+      if (apiResult.status < 0) 
+        new MessagesService().sendErrorMessage(apiResult.message);
+      else
+        setProduct(apiResult.data);
+    } catch(e) {
       new MessagesService().sendErrorMessage("An error happended processing your request");
+      console.log(e);
     }
   };
   function getProductPicture(url): string {

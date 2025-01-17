@@ -69,7 +69,7 @@ export default function UserOrders(){
             return (
                 <div className="order-container row" key={index}  data-aos="fade-up" data-aos-delay={index * 100}>
                     <div className="col-md-2">
-                        <img src={getProductPicture(invoice.product?.pictureUrl)} alt="Product Image" className="order-img" />
+                        <img src={getProductPicture(invoice.product?.pictureUrl)} alt="Product" className="order-img" />
                     </div>
                     <div className="col-md-6">
                         <div className="order-details">

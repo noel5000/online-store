@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useRef } from "react";
-import AOS from "aos";
 import "aos/dist/aos.css";
 import { CartContext } from "../contexts/cartContext.tsx";
 import "../assets/css/cart.css";
-import { applicationConfig } from "../common/environment.ts";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ICheckout, IRegisterUser } from "../common/model/user.ts";
 import { states } from "../common/model/localizationData.ts";

@@ -3,13 +3,10 @@ import "../assets/vendor/bootstrap/css/bootstrap.min.css";
 import "../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 import cart_icon from "../assets/img/shopping-cart.png";
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
   Link,
   useLocation
 } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import React from "react";
 import { CartContext } from "../contexts/cartContext.tsx";
 import { UserContext } from "../contexts/userContext.tsx";

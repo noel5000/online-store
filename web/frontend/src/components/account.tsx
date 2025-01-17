@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 import "../assets/css/account.css";
-import { redirect, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import settings_icon from "../assets/img/settings-cog-svgrepo-com.svg";
 import invoice_icon from "../assets/img/invoice-svgrepo-com.svg";
 import { UserContext } from "../contexts/userContext.tsx";

@@ -1,15 +1,10 @@
 
-import React,{ useContext, useEffect, useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
-import PageFooter from './pageFooting.tsx';
 import { useParams } from 'react-router-dom';
 import { HttpService } from '../common/httpService.ts';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { MessagesService } from '../common/messages.ts';
-import { UserContext } from '../contexts/userContext.tsx';
-import Input from './common/input.tsx';
-import TextArea from './common/textArea.tsx';
 import ContactUs from '../common/contactUs.tsx';
 
 const style ={

@@ -2,14 +2,7 @@
 import React,{ useContext, useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
-import PageFooter from './pageFooting.tsx';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { IOrderContact } from './Invoice-detail.tsx';
-import { MessagesService } from '../common/messages.ts';
-import { HttpService } from '../common/httpService.ts';
 import { UserContext } from '../contexts/userContext.tsx';
-import Input from './common/input.tsx';
-import TextArea from './common/textArea.tsx';
 import ContactUs from '../common/contactUs.tsx';
 
 const style ={

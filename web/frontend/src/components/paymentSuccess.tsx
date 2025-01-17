@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import "../assets/css/paymentSuccess.css";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function PaymentSuccess() {
   const navigate = useNavigate();

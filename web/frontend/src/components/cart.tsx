@@ -3,7 +3,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { CartContext } from "../contexts/cartContext.tsx";
 import "../assets/css/cart.css";
-import { applicationConfig } from "../common/environment.ts";
 import { Link } from "react-router-dom";
 import { getProductPicture } from "./product.tsx";
 

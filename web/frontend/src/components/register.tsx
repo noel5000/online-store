@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Link, useSearchParams } from "react-router-dom";
-import ReactDOM from "react-dom";
+import { useSearchParams } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IRegisterUser } from "../common/model/user";
 import { states } from "../common/model/localizationData.ts";
@@ -29,9 +28,9 @@ export default function Register() {
     formState: { errors },
   } = useForm<IRegisterUser>();
 
-  const onSubmit: SubmitHandler<IRegisterUser> = (data) => {
+  const onSubmit: SubmitHandler<IRegisterUser> = async (data) => {
     const from = searchParams.get("from");
-    createUser(data, from ? from : "");
+    await createUser(data, from ? from : "");
   };
 
   return (

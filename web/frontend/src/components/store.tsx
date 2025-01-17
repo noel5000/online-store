@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import PageHeader from "./pageHeading.tsx";
-import PageFooter from "./pageFooting.tsx";
 import { HttpService } from "../common/httpService.ts";
 import Product from "./product.tsx";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -39,7 +38,7 @@ export default function Store() {
     const result = `$top=${size}&$skip=${skip}&$count=true`;
     return result;
   }
-  function retreiveProducts() {
+  async function retreiveProducts() : Promise<any> {
     if (page * size >= count && apiCallsCount > 0) {
       setHasMore(false);
     } else {
@@ -47,24 +46,26 @@ export default function Store() {
     }
     setApiCallsCount((previousVal) => previousVal + 1);
     const api = new HttpService<IProduct>(`product`);
-    const result = api.GetOdata(setPagingQuery());
+    const result = await api.GetOdata(setPagingQuery());
     return result;
   }
-  function fetchData() {
-    fillProducts();
+  async function fetchData() {
+  return  await fillProducts();
   }
 
-  function fillProducts() {
-    retreiveProducts().then((r) => {
-      setCount(r["@odata.count"]);
-      setProducts((prevProducts) => [...prevProducts, ...r.value]);
-      const newPage = page + 1;
-      setPage(newPage);
-    })
-    .catch(e=>{
+  async function fillProducts() {
+
+    try{
+      const result = await retreiveProducts();
+      setCount(result["@odata.count"]);
+        setProducts((prevProducts) => [...prevProducts, ...result.value]);
+        const newPage = page + 1;
+        setPage(newPage);
+    }
+    catch(e){
       console.log(e);
-      new MessagesService().sendErrorMessage('Network error....');
-    });;
+      new MessagesService().sendErrorMessage('Communication Error....');
+    }
   }
 
   return (
