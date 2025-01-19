@@ -13,14 +13,6 @@ import Checkbox from "./common/checkbox.tsx";
 export default function Register() {
   const [searchParams] = useSearchParams();
   const {createUser} = useContext(UserContext);
-  useEffect(() => {
-    AOS.init({
-      duration: 600,
-      easing: "ease-in-out",
-      once: true,
-      mirror: false,
-    });
-  }, []);
 
   const {
     register,

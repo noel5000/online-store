@@ -14,12 +14,6 @@ export default function ProductDetail() {
   const [product, setProduct] = useState<IProduct | null>(null);
   const { addItem } = useContext(CartContext);
   useEffect(() => {
-    AOS.init({
-      duration: 600,
-      easing: "ease-in-out",
-      once: true,
-      mirror: false,
-    });
     getProduct();
   }, []);
 

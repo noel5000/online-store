@@ -13,14 +13,7 @@ const style ={
 
 export default function ContactPage(){
   const {isUserLoggedIn, getUser} = useContext(UserContext);
-    useEffect(() => {
-        AOS.init({
-          duration: 600,
-          easing: 'ease-in-out',
-          once: true,
-          mirror: false
-        });
-      }, []);
+
 
     return (<>
         

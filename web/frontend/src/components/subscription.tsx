@@ -5,14 +5,7 @@ import "aos/dist/aos.css";
 import PageHeader from './pageHeading.tsx';
 
 export default function Subscription(){
-  useEffect(() => {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
-  }, []);
+
     return (<>
     
 <PageHeader />

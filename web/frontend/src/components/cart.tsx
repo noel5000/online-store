@@ -13,12 +13,6 @@ export default function Cart() {
   total = Math.round(total);
   const totalItems = items.reduce((total, item) => total + item.quantity, 0);
   useEffect(() => {
-    AOS.init({
-      duration: 600,
-      easing: "ease-in-out",
-      once: true,
-      mirror: false
-    });
     if (!hasFetched.current) {
       hasFetched.current = true;
     }

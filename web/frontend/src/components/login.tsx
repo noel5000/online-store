@@ -29,14 +29,7 @@ export default function Login() {
     const from = searchParams.get("from");
     login(data, from);
   };
-  useEffect(() => {
-    AOS.init({
-      duration: 600,
-      easing: "ease-in-out",
-      once: true,
-      mirror: false
-    });
-  }, []);
+
   return (
     <>
       <section id="login" className="contact section">

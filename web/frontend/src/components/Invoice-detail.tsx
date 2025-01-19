@@ -32,12 +32,6 @@ export default function InvoceDetail(){
     const {orderid} = useParams();
     const [invoice, setInvoice] = useState<any>({items:[], date: '', total: 0})
     useEffect(() => {
-        AOS.init({
-          duration: 600,
-          easing: 'ease-in-out',
-          once: true,
-          mirror: false
-        });
         getInvoiceDetails(orderid!);
       }, []);
 

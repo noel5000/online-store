@@ -16,12 +16,7 @@ export const  getProductPicture = function(url): string {
 export default function Product({ product, index }: ProductProps) {
   const { addItem } = useContext(CartContext);
   useEffect(() => {
-    AOS.init({
-      duration: 600,
-      easing: "ease-in-out",
-      once: true,
-      mirror: false,
-    });
+  
   }, []);
 
   function setToCart() {
