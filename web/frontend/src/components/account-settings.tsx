@@ -24,50 +24,50 @@ export default function AccountSettings() {
     }
   }, []);
 
-  function saveUserInfo(data: ICheckout) {
+  async function saveUserInfo(data: ICheckout) {
    
-    const service = new HttpService<any>("auth");
-    service
-      .Put(data, "UpdateUser")
-
-      .then((r) => {
-        if (r.status < 0) 
-          new MessagesService().sendErrorMessage(r.message);
-        else {
-          new MessagesService().sendAlertMessage('Information updated successfully');
-          navigator("/account");
-        }
-      })
-      .catch(e=>{
-        console.log(e);
-        new MessagesService().sendErrorMessage('Network error....');
-      });
+    try{
+      const service = new HttpService<any>("auth");
+      const result = await service.Put(data, "UpdateUser");
+      if (result.status < 0) 
+        new MessagesService().sendErrorMessage(result.message);
+      else {
+        new MessagesService().sendAlertMessage('Information updated successfully');
+        navigator("/account");
+      }
+    }
+    catch(e){
+      console.log(e);
+      new MessagesService().sendErrorMessage('Network error....');
+    }
   }
 
-  function fetchUserData() {
-    if (isUserLoggedIn())
-      userService
-        .GetGeneric<IRegisterUser>(`GetUserInfo`)
-        .then((r) => {
-          if (r.status < 0) 
-            new MessagesService().sendErrorMessage(r.message);
-
-          const userData = r.data;
-          setValue("firstName", userData?.firstName || "");
-          setValue("lastName", userData?.lastName || "");
-          setValue("address", userData?.address || "");
-          setValue("address2", userData?.address2 || "");
-          setValue("zipCode", userData?.zipCode || "");
-          setValue("email", userData?.email || "");
-          setValue("country", userData?.country || "US");
-          setValue("phoneNumber", userData?.phoneNumber || "");
-          setValue("state", userData?.state || "");
-          setValue("shippingIsBilling", userData?.shippingIsBilling || false);
-        })
-        .catch(e=>{
+  async function fetchUserData() {
+        try{
+          if (isUserLoggedIn()){
+            const result = await userService
+               .GetGeneric<IRegisterUser>(`GetUserInfo`);
+               if (result.status < 0) 
+                 new MessagesService().sendErrorMessage(result.message);
+               else{
+                const userData = result.data;
+                setValue("firstName", userData?.firstName || "");
+                setValue("lastName", userData?.lastName || "");
+                setValue("address", userData?.address || "");
+                setValue("address2", userData?.address2 || "");
+                setValue("zipCode", userData?.zipCode || "");
+                setValue("email", userData?.email || "");
+                setValue("country", userData?.country || "US");
+                setValue("phoneNumber", userData?.phoneNumber || "");
+                setValue("state", userData?.state || "");
+                setValue("shippingIsBilling", userData?.shippingIsBilling || false);
+               }
+          }
+        }
+        catch(e){
           console.log(e);
           new MessagesService().sendErrorMessage('Network error....');
-        });
+        }
   }
 
   const userService = new HttpService<IRegisterUser>("auth");
@@ -78,8 +78,8 @@ export default function AccountSettings() {
     formState: { errors }
   } = useForm<ICheckout>();
 
-  const onSubmit: SubmitHandler<ICheckout> = (data) => {
-    saveUserInfo(data);
+  const onSubmit: SubmitHandler<ICheckout> = async (data) => {
+  await  saveUserInfo(data);
   };
 
   function validateUser() {

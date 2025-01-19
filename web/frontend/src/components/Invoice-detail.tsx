@@ -1,17 +1,11 @@
 
 import React,{ useEffect, useState } from 'react';
-import AOS from "aos";
 import "aos/dist/aos.css";
 import { useParams } from 'react-router-dom';
 import { HttpService } from '../common/httpService.ts';
 import { MessagesService } from '../common/messages.ts';
 import ContactUs from '../common/contactUs.tsx';
 
-const style ={
-    border: '0',
-     width: '100%',
-      height: '300px'
-}
 
 export interface IOrderContact {
   clientName:string;
@@ -35,19 +29,19 @@ export default function InvoceDetail(){
         getInvoiceDetails(orderid!);
       }, []);
 
-      const getInvoiceDetails = function(orderId:string){
-        const http = new HttpService<any>('invoice');
-        const promise = http.GetGeneric<any>(`GetInvoiceDetails/${orderId}`);
-        promise
-        .then(r=>{
-          if (r.status <0)
-            new MessagesService().sendErrorMessage(r.message);
-          setInvoice(r.data);
-        })
-      .catch(e=> {
-        new MessagesService().sendErrorMessage('an error happened while retreiving the information');
-          console.log(e);
-        })
+      const getInvoiceDetails = async function(orderId:string){
+        try{
+          const http = new HttpService<any>('invoice');
+          const result = await http.GetGeneric<any>(`GetInvoiceDetails/${orderId}`);
+          if (result.status <0)
+            new MessagesService().sendErrorMessage(result.message);
+          else
+            setInvoice(result.data);
+        }
+        catch(e){
+          new MessagesService().sendErrorMessage('an error happened while retreiving the information');
+            console.log(e);
+        }
       }
     
     return (<>

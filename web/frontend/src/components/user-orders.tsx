@@ -31,26 +31,27 @@ export default function UserOrders(){
         nav(to);
     }
 
-    function setFromDates(value:number){
-        GetInvoices(value);
+    async function setFromDates(value:number){
+       await GetInvoices(value);
     }
 
     function encodeUrl(data:string){
      return  data.toString();
     }
-    function GetInvoices(fromOption:number =0){
-        setFromDate(fromOption);
-        const http = new HttpService<any>('invoice');
-        http.GetAll(`GetUserHistory/${fromOption}`).then(r=>{
-            if(r.status<0)
-                new MessagesService().sendErrorMessage(r.message)
+    async function GetInvoices(fromOption:number =0){
+        try{
+            setFromDate(fromOption);
+            const http = new HttpService<any>('invoice');
+            const result = await http.GetAll(`GetUserHistory/${fromOption}`);
+            if(result.status<0)
+                new MessagesService().sendErrorMessage(result.message);
             else
-                setInvoices(r.data);
-        })
-        .catch(e=>{
-          console.log(e);
-          new MessagesService().sendErrorMessage('Network error....');
-        });
+                setInvoices(result.data);
+        }
+        catch(e){
+            console.log(e);
+            new MessagesService().sendErrorMessage('Network error....');
+        }
     }
 
     return (<>

@@ -29,56 +29,58 @@ export default function Checkout() {
     }
   }, []);
 
-  function processCheckout(data: ICheckout) {
-    data.items = items.map((item) => {
-      return {
-        quantity: item.quantity,
-        productId: item.product?.id,
-        total: item.total,
-        product: null
-      };
-    });
-    const service = new HttpService<any>("invoice");
-    service
-      .Post(data, "")
-
-      .then((r) => {
-        if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
-        else {
-          clear();
-          navigator("/paymentsuccess");
-        }
-      })
-      .catch(e=>{
-        console.log(e);
-        new MessagesService().sendErrorMessage('Network error....');
+  async function processCheckout(data: ICheckout) {
+    try{
+      data.items = items.map((item) => {
+        return {
+          quantity: item.quantity,
+          productId: item.product?.id,
+          total: item.total,
+          product: null
+        };
       });
+      const service = new HttpService<any>("invoice");
+      const result = await service.Post(data, "");
+      if (result.status < 0) 
+        new MessagesService().sendErrorMessage(result.message);
+      else {
+        clear();
+        navigator("/paymentsuccess");
+      }
+    }
+    catch(e){
+      console.log(e);
+      new MessagesService().sendErrorMessage('Network error....');
+    }
   }
 
-  function fetchUserData() {
-    if (isUserLoggedIn())
-      userService
-        .GetGeneric<IRegisterUser>(`GetUserInfo`)
-        .then((r) => {
-          if (r.status < 0) new MessagesService().sendErrorMessage(r.message);
-          const userData = r.data;
-          setValue("firstName", userData.firstName || "");
-          setValue("lastName", userData.lastName || "");
-          setValue("address", userData.address || "");
-          setValue("address2", userData.address2 || "");
-          setValue("zipCode", userData.zipCode || "");
-          setValue("email", userData.email || "");
-          setValue("country", userData.country || "US");
-          setValue("state", userData.state || "");
-          setValue("shippingIsBilling", userData.shippingIsBilling || false);
-        })
-        .catch(e=>{
-          console.log(e);
-          new MessagesService().sendErrorMessage('Network error....');
-        });
-  }
+  async function fetchUserData() {
+    try{
+      const userService = new HttpService<IRegisterUser>("auth");
+    if (isUserLoggedIn()){
 
-  const userService = new HttpService<IRegisterUser>("auth");
+      const result = await userService.GetGeneric<IRegisterUser>(`GetUserInfo`);
+      if (result.status < 0)
+        new MessagesService().sendErrorMessage(result.message);
+       else{
+         const userData = result.data;
+         setValue("firstName", userData.firstName || "");
+         setValue("lastName", userData.lastName || "");
+         setValue("address", userData.address || "");
+         setValue("address2", userData.address2 || "");
+         setValue("zipCode", userData.zipCode || "");
+         setValue("email", userData.email || "");
+         setValue("country", userData.country || "US");
+         setValue("state", userData.state || "");
+         setValue("shippingIsBilling", userData.shippingIsBilling || false);
+       }
+    }
+    }
+    catch(e){
+      console.log(e);
+      new MessagesService().sendErrorMessage('Network error....');
+    }
+  }
   const {
     register,
     handleSubmit,
@@ -86,8 +88,8 @@ export default function Checkout() {
     formState: { errors }
   } = useForm<ICheckout>();
 
-  const onSubmit: SubmitHandler<ICheckout> = (data) => {
-    processCheckout(data);
+  const onSubmit: SubmitHandler<ICheckout> = async (data) => {
+    await processCheckout(data);
   };
 
   function validateUser() {

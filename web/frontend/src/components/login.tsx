@@ -25,9 +25,9 @@ export default function Login() {
     formState: { errors }
   } = useForm<LoginInfo>();
 
-  const onSubmit: SubmitHandler<LoginInfo> = (data) => {
+  const onSubmit: SubmitHandler<LoginInfo> = async (data) => {
     const from = searchParams.get("from");
-    login(data, from);
+    await login(data, from);
   };
 
   return (
