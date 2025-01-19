@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { applicationConfig } from "../common/environment.ts";
 import { IProduct } from "../common/model/product.ts";
 import { CartContext } from "../contexts/cartContext.tsx";
@@ -9,15 +9,24 @@ import { CartContext } from "../contexts/cartContext.tsx";
 interface ProductProps {
   product: IProduct;
   index: number;
+  onClick?: (id:number)=>void;
 }
 export const  getProductPicture = function(url): string {
   return `${applicationConfig.backendUrl}${url}`;
 }
-export default function Product({ product, index }: ProductProps) {
+export default function Product({ product, index, onClick }: ProductProps) {
   const { addItem } = useContext(CartContext);
+  const navigator = useNavigate();
   useEffect(() => {
   
   }, []);
+
+  const goToProduct = (id:number)=>{
+    if(onClick)
+      onClick(id);
+    else 
+      navigator(`/product/${id}`);
+  }
 
   function setToCart() {
     addItem(product);
@@ -31,13 +40,12 @@ export default function Product({ product, index }: ProductProps) {
         key={product.id}
       >
         <div className="course-item">
-          <Link to={`/product/${product.id}`}>
             <img
+             onClick={()=>{goToProduct(product.id)}}
               src={getProductPicture(product.pictureUrl)}
               className="img-fluid"
               alt="..."
             />
-          </Link>
 
           <div className="course-content">
             <div className="d-flex justify-content-between align-items-center mb-3">
@@ -47,8 +55,8 @@ export default function Product({ product, index }: ProductProps) {
               <p className="price">${product.price}</p>
             </div>
 
-            <h3>
-              <Link to={`/product/${product.id}`}>{product.name}</Link>
+            <h3  onClick={()=>{goToProduct(product.id)}}>
+             {product.name}
             </h3>
             <p className="description">{product.description}</p>
             <div className="trainer d-flex justify-content-between align-items-center">

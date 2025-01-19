@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import AOS from "aos";
 import "aos/dist/aos.css";
 import PageHeader from "./pageHeading.tsx";
 import Product from "./product.tsx";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useStoreProduct from "./hooks/useStoreProducts.tsx";
+import { useNavigate } from "react-router-dom";
 
 export default function Store() {
   const hasFetched = useRef(false);
+  const navigator = useNavigate();
   const {fillProducts, fetchData, products, hasMore} = useStoreProduct();
   useEffect(() => {
 
@@ -17,20 +18,16 @@ export default function Store() {
     }
   }, []);
   
-
+  const getProductDetail = (id:number)=>{
+    window.scrollTo({top: 200, behavior:'smooth'});
+    navigator(`/product/${id}`);
+  }
 
 
   return (
     <>
       <main className="main">
         <PageHeader title="All products" />
-        <input
-          type="button"
-          hidden={true}
-          id="testButton"
-          value="probar"
-          onClick={fetchData}
-        ></input>
         <InfiniteScroll
           dataLength={products.length} //This is important field to render the next data
           next={fetchData}
@@ -46,7 +43,7 @@ export default function Store() {
             <div className="container">
               <div className="row">
                 {products.map((p, index) => (
-                  <Product product={p} key={p.id} index={index}></Product>
+                  <Product onClick={getProductDetail} product={p} key={p.id} index={index}></Product>
                 ))}
               </div>
             </div>
