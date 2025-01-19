@@ -44,11 +44,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration["ConnectionStrings:Main"]);
 });
 
-builder.Services.AddScope<TokenServices>();
-builder.Services.AddScope<EmailTemplates>();
-builder.Services.AddScope<IAzulService, AzulTestService>();
-builder.Services.AddScope<IUserService, UserService>();
-builder.Services.AddScope<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<TokenServices>();
+builder.Services.AddScoped<EmailTemplates>();
+builder.Services.AddScoped<IAzulService, AzulTestService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
